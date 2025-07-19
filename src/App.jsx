@@ -6,6 +6,7 @@ import { useRef } from 'react'
 import Home from './components/Home'
 import ExpandButton from './components/ExpandButton'
 import BackgroundMusic from './components/BackgroundMusic'
+import AboutMe from './components/AboutMe'
 
 /* For cube
 function App() {
@@ -34,6 +35,7 @@ function App() {
         {/* UI Layer */}
         <div className="absolute z-10 w-full h-full pointer-events-auto">
           <Home />
+          
           <BackgroundMusic ref={musicRef}/>
           <ExpandButton onStart={handleStart}/>
         </div>
