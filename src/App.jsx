@@ -25,7 +25,7 @@ function App() {
         <Canvas>
           <directionalLight position={[0, 0, 2]} intensity={0.5} />
           <ambientLight intensity={0.1} />
-          <Experience position={[0, -15, -3.5]} size={[15, 30, 30]} color='#0c0c0c' />
+          <Experience position={[0, -17, 0]} size={[15, 30, 30]} color='#0c0c0c' />
         </Canvas>
       </div>
     </>
