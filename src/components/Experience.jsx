@@ -36,7 +36,7 @@ export const Experience = ({ position, size, color }) => {
 
     return (
         <>
-            <OrbitControls enableZoom={false} />
+            <OrbitControls enableZoom={true} />
 
             {/* Walking Sprite */}
             <mesh ref={spriteRef}>
@@ -47,17 +47,43 @@ export const Experience = ({ position, size, color }) => {
                 />
             </mesh>
 
-            {/* Sphere */}
-            <mesh position={position} ref={sphereRef}>
-                <sphereGeometry args={[14.92, 30, 30]} />
-                <meshStandardMaterial color={color} />
-            </mesh>
+            <group position={position} ref={sphereRef} rotation={[0, 0, Math.PI / 2]}>
+                {/* Solid sphere */}
+                <mesh>
+                    <sphereGeometry args={[14.9, 30, 30]} />
+                    <meshStandardMaterial color={color} />
+                </mesh>
 
-            {/* Sphere */}
-            <mesh position={position} ref={sphereRef} rotation={[0, 0, Math.PI / 2]}>
-                <sphereGeometry args={size} />
-                <meshStandardMaterial map={texture} wireframe />
-            </mesh>
+                {/* Wireframe sphere */}
+                <mesh>
+                    <sphereGeometry args={size} />
+                    <meshStandardMaterial map={texture} wireframe />
+                </mesh>
+
+                {/* Mountains / Solid Cube */}
+                <mesh rotation={[Math.PI / 2, 5, 0]}>
+                    <boxGeometry args={[19.9, 19.9, 19.9]} />
+                    <meshStandardMaterial color={color} />
+                </mesh>
+
+                {/* Wireframe Mountains / Cube */}
+                <mesh rotation={[Math.PI / 2, 5, 0]}>
+                    <boxGeometry args={[20, 20, 20, 10, 10, 10]} />
+                    <meshStandardMaterial map={texture} wireframe/>
+                </mesh>
+
+                {/* Mountains / Solid Cube */}
+                <mesh rotation={[Math.PI / 9, 10, 5]}>
+                    <boxGeometry args={[19.9, 19.9, 19.9]} />
+                    <meshStandardMaterial color={color} />
+                </mesh>
+
+                {/* Wireframe Mountains / Cube */}
+                <mesh rotation={[Math.PI / 9, 10, 5]}>
+                    <boxGeometry args={[20, 20, 20, 10, 10, 10]} />
+                    <meshStandardMaterial map={texture} wireframe/>
+                </mesh>
+            </group>
 
         </>
     )
