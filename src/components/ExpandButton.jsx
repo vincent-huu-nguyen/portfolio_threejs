@@ -4,7 +4,7 @@ import clickSoundFile from '../assets/select.mp3';
 import backSoundFile from '../assets/back.mp3';
 import useSoundEffect from '../hooks/useSoundEffect';
 
-export default function ExpandButton({ onStart }) {
+export default function ExpandButton({ onStart, onAboutMeClick }) {
     const [startVisible, setStartVisible] = useState(false);
     const [hideStart, setHideStart] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
@@ -46,6 +46,15 @@ export default function ExpandButton({ onStart }) {
         }, 500);
     };
 
+    const handleAboutClick = () => {
+        playClick();
+        setOptionsVisible(false);
+        setTimeout(() => {
+            setShowOptions(false);
+            onAboutMeClick?.(); // Call parent to show AboutMe
+        }, 500);
+    };
+
     const baseButtonStyle =
         'w-40 h-12 text-white border-2 border-white transition duration-500 hover:scale-110 ' +
         'hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 ' +
@@ -73,11 +82,21 @@ export default function ExpandButton({ onStart }) {
                             key={index}
                             className={baseButtonStyle}
                             onMouseEnter={playHover}
-                            onClick={playClick}
+                            onClick={() => {
+                                playClick();
+                                if (label === 'About Me') {
+                                    setOptionsVisible(false);
+                                    setTimeout(() => {
+                                        setShowOptions(false);
+                                        onAboutMeClick?.(); // trigger the prop
+                                    }, 500); // wait for fade out
+                                }
+                            }}
                         >
                             {label}
                         </button>
                     ))}
+
 
                     <div className="col-span-2 flex justify-center">
                         <button

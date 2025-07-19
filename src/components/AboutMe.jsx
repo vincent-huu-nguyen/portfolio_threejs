@@ -2,7 +2,7 @@ import { useState } from 'react';
 import AboutMeCard from '../assets/AboutMe_Card.png';
 import TechStackCard from '../assets/TechStack_Card.png';
 
-export default function AboutMe() {
+export default function AboutMe({ onBack }) {
   const [showFirst, setShowFirst] = useState(true);
 
   const toggleImage = () => {
@@ -22,6 +22,12 @@ export default function AboutMe() {
       >
         Flip
       </button>
+      <button
+          onClick={onBack}
+          className="w-40 h-12 text-white border-2 border-white transition duration-500 hover:scale-110"
+        >
+          Back
+        </button>
     </div>
   );
 }
