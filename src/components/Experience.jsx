@@ -9,7 +9,7 @@ import walk2 from '../assets/TrainerFrame2.png'
 import walk3 from '../assets/TrainerFrame3.png'
 import walk4 from '../assets/TrainerFrame4.png'
 
-export const Experience = ({ position, size }) => {
+export const Experience = ({ position, size, color }) => {
     const sphereRef = useRef()
     const spriteRef = useRef()
 
@@ -22,7 +22,7 @@ export const Experience = ({ position, size }) => {
 
     useFrame((state, delta) => {
         // Rotate sphere
-        sphereRef.current.rotation.x -= delta * 0.5
+        sphereRef.current.rotation.x -= delta * 0.3
 
         // Animate sprite
         elapsedRef.current += delta
@@ -49,6 +49,12 @@ export const Experience = ({ position, size }) => {
 
             {/* Sphere */}
             <mesh position={position} ref={sphereRef}>
+                <sphereGeometry args={[14.92, 30, 30]} />
+                <meshStandardMaterial color={color} />
+            </mesh>
+
+            {/* Sphere */}
+            <mesh position={position} ref={sphereRef} rotation={[0, 0, Math.PI / 2]}>
                 <sphereGeometry args={size} />
                 <meshStandardMaterial map={texture} wireframe />
             </mesh>
