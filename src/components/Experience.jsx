@@ -3,6 +3,7 @@ import { useFrame, useLoader, useThree } from "@react-three/fiber"
 import { useRef, useState, useEffect } from "react"
 import { useTexture } from "@react-three/drei"
 import { TextureLoader, Vector3 } from "three"
+import { useSpring, a } from '@react-spring/three'
 import { TextBox } from './TextBox'
 
 import gradientImage from '../assets/gradient.png'
@@ -125,6 +126,20 @@ export const Experience = ({ position, size, color }) => {
     const lastScrollTime = useRef(0)
     const scrollCooldown = 0.1 // seconds the sprite animates after a scroll
 
+    const spring = useSpring({
+        from: { y: -30 },
+        to: { y: -17 },
+        config: { tension: 80, friction: 15 },
+    })
+
+    /*
+    const spriteSpring = useSpring({
+        from: { y: -20 },
+        to: { y: -1.5 }, // ends lower than the sphere
+        config: { tension: 80, friction: 12 },
+    })
+    */
+
     // Scroll event setup
     useEffect(() => {
         const handleScroll = (e) => {
@@ -171,16 +186,16 @@ export const Experience = ({ position, size, color }) => {
 
     return (
         <>
-            <OrbitControls enableZoom={false} enableRotate={true} />
+            <OrbitControls enableZoom={true} enableRotate={true} />
 
             {/* Walking Sprite */}
             <mesh ref={spriteRef} position={[0, -1.5, 0]}>
-                <planeGeometry args={[1, 1]} />
+                <planeGeometry args={[1.25, 1.25]} />
                 <meshBasicMaterial map={walkFrames[frameIndex]} transparent />
             </mesh>
 
             {/* Scene Group (rotated by scroll) */}
-            <group position={position} ref={sphereRef} rotation={[0, 0, Math.PI / 2]}>
+            <a.group position-y={spring.y} ref={sphereRef} rotation={[0, 0, Math.PI / 2]}>
                 {/* Solid sphere */}
                 <mesh>
                     <sphereGeometry args={[14.9, 30, 30]} />
@@ -214,7 +229,7 @@ export const Experience = ({ position, size, color }) => {
                     <meshStandardMaterial map={texture} wireframe />
                 </mesh>
 
-            </group>
+            </a.group>
         </>
     )
 }
