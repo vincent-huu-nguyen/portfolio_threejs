@@ -3,6 +3,7 @@ import './index.css'
 import { Canvas } from "@react-three/fiber"
 import { Experience } from './components/Experience'
 import Home from './components/Home'
+import ExpandButton from './components/ExpandButton'
 
 /* For cube
 function App() {
@@ -20,13 +21,20 @@ function App() {
 
   return (
     <>
-      <Home />
-      <div className='absolute w-full h-184'>
-        <Canvas>
-          <directionalLight position={[0, 0, 2]} intensity={0.5} />
-          <ambientLight intensity={0.1} />
-          <Experience position={[0, -17, 0]} size={[15, 30, 30]} color='#0c0c0c' />
-        </Canvas>
+      <div className="relative w-screen h-screen overflow-hidden">
+        {/* UI Layer */}
+        <div className="absolute z-10 w-full h-full pointer-events-auto">
+          <Home />
+          <ExpandButton />
+        </div>
+
+        <div className='absolute inset-x-0 bottom-0 w-full h-184 z-0 pointer-events-none'>
+          <Canvas>
+            <directionalLight position={[0, 0, 2]} intensity={0.5} />
+            <ambientLight intensity={0.1} />
+            <Experience position={[0, -17, 0]} size={[15, 30, 30]} color='#0c0c0c' />
+          </Canvas>
+        </div>
       </div>
     </>
   )

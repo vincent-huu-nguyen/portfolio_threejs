@@ -1,9 +1,14 @@
-
+import { motion } from "framer-motion";
 
 export default function Home() {
     return (
         <>
-            <section className="px-5 text-[#f7f8f8] pt-10">
+            <motion.section
+                initial={{ y: -200, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="px-5 text-[#f7f8f8] pt-10"
+            >
                 <div className="flex items-center justify-center flex-col text-center">
                     <h1 className="text-7xl font-bold mb-1 bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 text-transparent bg-clip-text hover:scale-110 duration-200">
                         VINCENT NGUYEN
@@ -29,7 +34,7 @@ export default function Home() {
                         </a>
                     </div>
                 </div>
-            </section>
+            </motion.section>
         </>
     )
 }
