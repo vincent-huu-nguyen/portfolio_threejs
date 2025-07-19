@@ -45,9 +45,9 @@ function App() {
 
         <div className='absolute inset-x-0 bottom-0 w-full h-screen z-0 pointer-events-none'>
           <Canvas>
-            <directionalLight position={[0, 0, 2]} intensity={0.5} />
-            <ambientLight intensity={0.1} />
-            <Experience position={[0, -17, 0]} size={[15, 30, 30]} color='#0c0c0c' scale={isMobile ? [0.6, 0.6, 0.6] : [1, 1, 1]}/>
+            <directionalLight position={[0, 10, 10]} intensity={1.5} />
+            <ambientLight intensity={0.8} />
+            <Experience position={[0, -17, 0]} size={[15, 30, 30]} color='#000000' scale={isMobile ? [0.6, 0.6, 0.6] : [1, 1, 1]}/>
           </Canvas>
         </div>
       </div>
