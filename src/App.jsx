@@ -40,7 +40,7 @@ function App() {
           <ExpandButton onStart={handleStart}/>
         </div>
 
-        <div className='absolute inset-x-0 bottom-0 w-full h-184 z-0 pointer-events-none'>
+        <div className='absolute inset-x-0 bottom-0 w-full h-screen z-0 pointer-events-none'>
           <Canvas>
             <directionalLight position={[0, 0, 2]} intensity={0.5} />
             <ambientLight intensity={0.1} />
