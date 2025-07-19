@@ -2,8 +2,10 @@ import './App.css'
 import './index.css'
 import { Canvas } from "@react-three/fiber"
 import { Experience } from './components/Experience'
+import { useRef } from 'react'
 import Home from './components/Home'
 import ExpandButton from './components/ExpandButton'
+import BackgroundMusic from './components/BackgroundMusic'
 
 /* For cube
 function App() {
@@ -18,6 +20,13 @@ function App() {
 
 /* For sphere */
 function App() {
+  const musicRef = useRef()
+
+  const handleStart = () => {
+    if (musicRef.current) {
+      musicRef.current.play()
+    }
+  }
 
   return (
     <>
@@ -25,7 +34,8 @@ function App() {
         {/* UI Layer */}
         <div className="absolute z-10 w-full h-full pointer-events-auto">
           <Home />
-          <ExpandButton />
+          <BackgroundMusic ref={musicRef}/>
+          <ExpandButton onStart={handleStart}/>
         </div>
 
         <div className='absolute inset-x-0 bottom-0 w-full h-184 z-0 pointer-events-none'>
