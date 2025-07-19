@@ -19,7 +19,7 @@ function App() {
   return (
     <Canvas>
       <directionalLight position={[0, 0, 2]} />
-        <Experience position={[0, -3, 0]} size={[4, 30, 30]}/>
+        <Experience position={[0, -15, -10]} size={[15, 30, 30]}/>
     </Canvas>
   )
 }

@@ -1,23 +1,58 @@
 import { OrbitControls } from "@react-three/drei"
-import { useFrame } from "@react-three/fiber"
-import { useRef } from "react"
+import { useFrame, useLoader } from "@react-three/fiber"
+import { useRef, useState } from "react"
 import { useTexture } from "@react-three/drei"
+import { TextureLoader } from "three"
 import gradientImage from '../assets/gradient.png'
+import walk1 from '../assets/TrainerFrame1.png'
+import walk2 from '../assets/TrainerFrame2.png'
+import walk3 from '../assets/TrainerFrame3.png'
+import walk4 from '../assets/TrainerFrame4.png'
 
-export const Experience = ({position, size}) => {
+export const Experience = ({ position, size }) => {
+    const sphereRef = useRef()
+    const spriteRef = useRef()
 
     const texture = useTexture(gradientImage)
-    const ref = useRef()
+
+    const walkFrames = useLoader(TextureLoader, [walk1, walk2, walk3, walk4])
+    const [frameIndex, setFrameIndex] = useState(0)
+    const elapsedRef = useRef(0)
+    const frameDuration = 0.15
+
     useFrame((state, delta) => {
-        ref.current.rotation.x -= delta * 0.5
+        // Rotate sphere
+        sphereRef.current.rotation.x -= delta * 0.5
+
+        // Animate sprite
+        elapsedRef.current += delta
+        if (elapsedRef.current >= frameDuration) {
+            elapsedRef.current = 0
+            setFrameIndex((prev) => (prev + 1) % walkFrames.length)
+        }
+
+
     })
+
     return (
         <>
-            <OrbitControls />
-            <mesh position={position} ref={ref}>
-                <sphereGeometry args={size} />
-                <meshStandardMaterial map={texture} wireframe/>
+            <OrbitControls enableZoom={false} />
+
+            {/* Walking Sprite */}
+            <mesh ref={spriteRef}>
+                <planeGeometry args={[1, 1]} />
+                <meshBasicMaterial
+                    map={walkFrames[frameIndex]}
+                    transparent
+                />
             </mesh>
+
+            {/* Sphere */}
+            <mesh position={position} ref={sphereRef}>
+                <sphereGeometry args={size} />
+                <meshStandardMaterial map={texture} wireframe />
+            </mesh>
+
         </>
     )
 }
