@@ -23,8 +23,7 @@ function App() {
 /* For sphere */
 function App() {
   const [isMobile, setIsMobile] = useState(false);
-  const [showAboutMe, setShowAboutMe] = useState(false);
-
+  const [activeSection, setActiveSection] = useState('menu'); // 'menu', 'about'
   const musicRef = useRef()
 
   const handleStart = () => {
@@ -41,14 +40,16 @@ function App() {
           <Home />
 
           <BackgroundMusic ref={musicRef} />
-          {!showAboutMe && (
+          {activeSection === 'menu' && (
             <ExpandButton
               onStart={handleStart}
-              onAboutMeClick={() => setShowAboutMe(true)}
+              onAboutMeClick={() => setActiveSection('about')}
             />
           )}
 
-          {showAboutMe && <AboutMe onBack={() => setShowAboutMe(false)} />}
+          {activeSection === 'about' && (
+            <AboutMe onBack={() => setActiveSection('menu')} />
+          )}
         </div>
 
         <div className='absolute inset-x-0 bottom-0 w-full h-screen z-0 pointer-events-none'>
