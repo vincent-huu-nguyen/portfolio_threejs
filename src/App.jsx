@@ -1,5 +1,6 @@
 import './App.css'
 import './index.css'
+import { useEffect, useState } from 'react';
 import { Canvas } from "@react-three/fiber"
 import { Experience } from './components/Experience'
 import { useRef } from 'react'
@@ -21,6 +22,8 @@ function App() {
 
 /* For sphere */
 function App() {
+  const [isMobile, setIsMobile] = useState(false);
+
   const musicRef = useRef()
 
   const handleStart = () => {
@@ -35,16 +38,16 @@ function App() {
         {/* UI Layer */}
         <div className="absolute z-10 w-full h-full pointer-events-auto">
           <Home />
-          
-          <BackgroundMusic ref={musicRef}/>
-          <ExpandButton onStart={handleStart}/>
+
+          <BackgroundMusic ref={musicRef} />
+          <ExpandButton onStart={handleStart} />
         </div>
 
         <div className='absolute inset-x-0 bottom-0 w-full h-screen z-0 pointer-events-none'>
           <Canvas>
             <directionalLight position={[0, 0, 2]} intensity={0.5} />
             <ambientLight intensity={0.1} />
-            <Experience position={[0, -17, 0]} size={[15, 30, 30]} color='#0c0c0c' />
+            <Experience position={[0, -17, 0]} size={[15, 30, 30]} color='#0c0c0c' scale={isMobile ? [0.6, 0.6, 0.6] : [1, 1, 1]}/>
           </Canvas>
         </div>
       </div>

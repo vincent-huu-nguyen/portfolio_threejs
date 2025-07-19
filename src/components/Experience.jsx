@@ -111,7 +111,7 @@ out through the contact form or connect with me on LinkedIn." />
 */
 
 /* Scrolling Script */
-export const Experience = ({ position, size, color }) => {
+export const Experience = ({ position, size, color, scale = [1, 1, 1] }) => {
     const sphereRef = useRef()
     const spriteRef = useRef()
     const scrollDelta = useRef(0)
@@ -189,13 +189,13 @@ export const Experience = ({ position, size, color }) => {
             <OrbitControls enableZoom={true} enableRotate={true} />
 
             {/* Walking Sprite */}
-            <mesh ref={spriteRef} position={[0, -1.5, 0]}>
+            <mesh ref={spriteRef} position={[0, -1.5, 0]} scale={scale}>
                 <planeGeometry args={[1.25, 1.25]} />
                 <meshBasicMaterial map={walkFrames[frameIndex]} transparent />
             </mesh>
 
             {/* Scene Group (rotated by scroll) */}
-            <a.group position-y={spring.y} ref={sphereRef} rotation={[0, 0, Math.PI / 2]}>
+            <a.group position-y={spring.y} scale={scale} ref={sphereRef} rotation={[0, 0, Math.PI / 2]}>
                 {/* Solid sphere */}
                 <mesh>
                     <sphereGeometry args={[14.9, 30, 30]} />

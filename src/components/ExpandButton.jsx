@@ -57,7 +57,7 @@ export default function ExpandButton({ onStart }) {
         <button
           onMouseEnter={playHover}
           onClick={handleStartClick}
-          className={`mt-10 sm:mt-30 ${baseButtonStyle} ${
+          className={`mt-20 sm:mt-30 ${baseButtonStyle} ${
             startVisible && !hideStart ? 'opacity-100' : 'opacity-0'
           }`}
         >
