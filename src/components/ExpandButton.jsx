@@ -52,12 +52,12 @@ export default function ExpandButton({ onStart }) {
     'hover:border-transparent hover:ring-2 hover:ring-offset-2 hover:ring-transparent';
 
   return (
-    <div className="flex items-center justify-center z-10 mt-20 sm:mt-5">
+    <div className="flex items-center justify-center z-10 mt-5 sm:mt-15">
       {!showOptions ? (
         <button
           onMouseEnter={playHover}
           onClick={handleStartClick}
-          className={`mt-30 ${baseButtonStyle} ${
+          className={`mt-10 sm:mt-30 ${baseButtonStyle} ${
             startVisible && !hideStart ? 'opacity-100' : 'opacity-0'
           }`}
         >
