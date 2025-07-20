@@ -1,36 +1,27 @@
 import './App.css'
 import './index.css'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Canvas } from "@react-three/fiber"
 import { Experience } from './components/Experience'
-import { useRef } from 'react'
 import Home from './components/Home'
 import ExpandButton from './components/ExpandButton'
 import BackgroundMusic from './components/BackgroundMusic'
 import AboutMe from './components/AboutMe'
 
-/* For cube
-function App() {
-
-  return (
-    <Canvas>
-        <Experience position={[0, 0, 0]} size={[1, 1, 1]} color={"orange"}/>
-    </Canvas>
-  )
-}
-*/
-
-/* For sphere */
 function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [activeSection, setActiveSection] = useState('menu'); // 'menu', 'about'
-  const musicRef = useRef()
+  const [optionsVisible, setOptionsVisible] = useState(true);
+  const [showOptions, setShowOptions] = useState(false);
+  const [showAboutMe, setShowAboutMe] = useState(false);
+
+  const musicRef = useRef();
 
   const handleStart = () => {
     if (musicRef.current) {
-      musicRef.current.play()
+      musicRef.current.play();
     }
-  }
+  };
 
   return (
     <>
@@ -38,21 +29,39 @@ function App() {
         {/* UI Layer */}
         <div className="absolute z-10 w-full h-full pointer-events-auto">
           <Home />
-
           <BackgroundMusic ref={musicRef} />
+
           {activeSection === 'menu' && (
             <ExpandButton
               onStart={handleStart}
-              onAboutMeClick={() => setActiveSection('about')}
+              onAboutMeClick={() => {
+                setActiveSection('about');
+                setTimeout(() => setShowAboutMe(true), 10); // trigger slide-in
+              }}
+              optionsVisible={optionsVisible}
+              setOptionsVisible={setOptionsVisible}
+              showOptions={showOptions}
+              setShowOptions={setShowOptions}
             />
           )}
 
-          {activeSection === 'about' && (
-            <AboutMe onBack={() => setActiveSection('menu')} />
-          )}
+          <AboutMe
+            isVisible={activeSection === 'about' && showAboutMe}
+            onBack={() => {
+              setShowAboutMe(false); // Slide it down
+              setTimeout(() => {
+                setActiveSection('menu');
+                setShowOptions(true); // Immediately show the buttons container
+                setTimeout(() => {
+                  setOptionsVisible(true); // Fade in after it's mounted
+                }, 50); // Short delay to allow opacity transition
+              }, 500); // Match AboutMe slide-out duration
+            }}
+          />
+
         </div>
 
-        <div className='absolute inset-x-0 bottom-0 w-full h-screen z-0 pointer-events-none'>
+        <div className="absolute inset-x-0 bottom-0 w-full h-screen z-0 pointer-events-none">
           <Canvas>
             <directionalLight position={[0, 10, 10]} intensity={1.5} />
             <ambientLight intensity={0.8} />
@@ -64,4 +73,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
