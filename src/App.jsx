@@ -65,7 +65,13 @@ function App() {
           <Canvas>
             <directionalLight position={[0, 10, 10]} intensity={1.5} />
             <ambientLight intensity={0.8} />
-            <Experience position={[0, -17, 0]} size={[15, 30, 30]} color='#000000' scale={isMobile ? [0.6, 0.6, 0.6] : [1, 1, 1]} />
+            <Experience
+              position={[0, -17, 0]}
+              size={[15, 30, 30]}
+              color="#000000"
+              zoomedOut={!showOptions}
+            />
+
           </Canvas>
         </div>
       </div>
