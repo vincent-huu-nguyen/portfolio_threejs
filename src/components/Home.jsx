@@ -13,7 +13,7 @@ export default function Home() {
                     <h1 className="text-5xl sm:text-7xl font-bold mb-1 bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 text-transparent bg-clip-text hover:scale-110 duration-200">
                         VINCENT NGUYEN
                     </h1>
-                    <p className="text-2xl font-bold text-white">Software Engineer, Web Developer & Game Designer</p>
+                    <p className="text-2xl font-bold text-white">Software Engineer, Web Developer, Game Developer & Sound Designer</p>
                     <div className="flex flex-wrap items-center text-center justify-center mt-2 gap-2">
                         <a href="https://www.linkedin.com/in/vincent-huu-nguyen/"
                             target="_blank"
