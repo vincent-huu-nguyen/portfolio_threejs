@@ -34,7 +34,7 @@ export const Experience = ({ position, size, color, zoomedOut = false }) => {
 
     const spring = useSpring({
         scale: zoomedOut ? [0.9, 0.9, 0.9] : [1, 1, 1],
-        position: zoomedOut ? [0, -2.5, 0] : [0, -1.5, 0],
+        position: zoomedOut ? [0, -2.3, 0] : [0, -1.5, 0],
         config: { tension: 120, friction: 18 },
     });
 
