@@ -8,6 +8,7 @@ export default function ExpandButton({
   onStart,
   onAboutMeClick,
   onContactClick,
+  onPortfolioClick,
   optionsVisible,
   setOptionsVisible,
   showOptions,
@@ -98,6 +99,13 @@ export default function ExpandButton({
                   setTimeout(() => {
                     setShowOptions(false);
                     onContactClick?.(); // 👈 new addition
+                  }, 500);
+                }
+                else if (label === 'Portfolio') {
+                  setOptionsVisible(false);
+                  setTimeout(() => {
+                    setShowOptions(false);
+                    onPortfolioClick?.();
                   }, 500);
                 }
               }}

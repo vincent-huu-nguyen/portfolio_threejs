@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
-export default function Home({ isContactVisible }) {
+export default function Home({ isContactVisible, isPortfolioVisible }) {
     return (
         <motion.section
             initial={{ y: -200, opacity: 0 }}
-            animate={isContactVisible ? { y: -200, opacity: 0 } : { y: 0, opacity: 1 }}
+            animate={isContactVisible || isPortfolioVisible ? { y: -200, opacity: 0 } : { y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
             className="px-5 text-[#f7f8f8] pt-10"
         >

@@ -8,6 +8,8 @@ import ExpandButton from './components/ExpandButton'
 import BackgroundMusic from './components/BackgroundMusic'
 import AboutMe from './components/AboutMe'
 import Contact from './components/Contact'
+import Portfolio from './components/Portfolio'
+
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -16,6 +18,8 @@ function App() {
   const [showOptions, setShowOptions] = useState(false);
   const [showAboutMe, setShowAboutMe] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [showPortfolio, setShowPortfolio] = useState(false);
+
 
   const musicRef = useRef();
 
@@ -30,7 +34,10 @@ function App() {
       <div className="relative w-screen h-screen overflow-hidden">
         {/* UI Layer */}
         <div className="absolute z-10 w-full h-full pointer-events-auto">
-          <Home isContactVisible={activeSection === 'contact' && showContact} />
+          <Home
+            isContactVisible={activeSection === 'contact' && showContact}
+            isPortfolioVisible={activeSection === 'portfolio' && showPortfolio}
+          />
           <BackgroundMusic ref={musicRef} />
 
           {activeSection === 'menu' && (
@@ -43,6 +50,10 @@ function App() {
               onContactClick={() => {
                 setActiveSection('contact');
                 setTimeout(() => setShowContact(true), 10);
+              }}
+              onPortfolioClick={() => {
+                setActiveSection('portfolio');
+                setTimeout(() => setShowPortfolio(true), 10);
               }}
               optionsVisible={optionsVisible}
               setOptionsVisible={setOptionsVisible}
@@ -75,6 +86,17 @@ function App() {
                   setOptionsVisible(true); // Then fade them in
                 }, 50);
               }, 500); // Wait for Contact to slide out
+            }}
+          />
+          <Portfolio
+            isVisible={activeSection === 'portfolio' && showPortfolio}
+            onBack={() => {
+              setShowPortfolio(false);
+              setTimeout(() => {
+                setActiveSection('menu');
+                setShowOptions(true);
+                setTimeout(() => setOptionsVisible(true), 50);
+              }, 500);
             }}
           />
 
