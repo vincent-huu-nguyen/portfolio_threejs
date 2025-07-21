@@ -7,6 +7,7 @@ import Home from './components/Home'
 import ExpandButton from './components/ExpandButton'
 import BackgroundMusic from './components/BackgroundMusic'
 import AboutMe from './components/AboutMe'
+import Contact from './components/Contact'
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -14,6 +15,7 @@ function App() {
   const [optionsVisible, setOptionsVisible] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
   const [showAboutMe, setShowAboutMe] = useState(false);
+  const [showContact, setShowContact] = useState(false);
 
   const musicRef = useRef();
 
@@ -36,7 +38,11 @@ function App() {
               onStart={handleStart}
               onAboutMeClick={() => {
                 setActiveSection('about');
-                setTimeout(() => setShowAboutMe(true), 10); // trigger slide-in
+                setTimeout(() => setShowAboutMe(true), 10);
+              }}
+              onContactClick={() => {
+                setActiveSection('contact');
+                setTimeout(() => setShowContact(true), 10);
               }}
               optionsVisible={optionsVisible}
               setOptionsVisible={setOptionsVisible}
@@ -56,6 +62,17 @@ function App() {
                   setOptionsVisible(true); // Fade in after it's mounted
                 }, 50); // Short delay to allow opacity transition
               }, 500); // Match AboutMe slide-out duration
+            }}
+          />
+          <Contact
+            isVisible={activeSection === 'contact' && showContact}
+            onBack={() => {
+              setShowContact(false);
+              setTimeout(() => {
+                setActiveSection('menu');
+                setOptionsVisible(true);
+                setShowOptions(true);
+              }, 500);
             }}
           />
 

@@ -7,6 +7,7 @@ import useSoundEffect from '../hooks/useSoundEffect';
 export default function ExpandButton({
   onStart,
   onAboutMeClick,
+  onContactClick,
   optionsVisible,
   setOptionsVisible,
   showOptions,
@@ -79,7 +80,7 @@ export default function ExpandButton({
         <div
           className={`grid gap-4 transition-opacity duration-500 ${windowHeight < 500 ? 'grid-cols-2 auto-rows-auto' : 'flex flex-col items-center'} ${optionsVisible ? 'opacity-100' : 'opacity-0'}`}
         >
-          {['About Me', 'Portfolio', 'Contact Me', 'Extra'].map((label, index) => (
+          {['About Me', 'Portfolio', 'Contact Me', 'Music Player'].map((label, index) => (
             <button
               key={index}
               className={baseButtonStyle}
@@ -92,12 +93,19 @@ export default function ExpandButton({
                     setShowOptions(false);
                     onAboutMeClick?.();
                   }, 500);
+                } else if (label === 'Contact Me') {
+                  setOptionsVisible(false);
+                  setTimeout(() => {
+                    setShowOptions(false);
+                    onContactClick?.(); // 👈 new addition
+                  }, 500);
                 }
               }}
             >
               {label}
             </button>
           ))}
+
 
           <div className="col-span-2 flex justify-center">
             <button
