@@ -80,7 +80,7 @@ export default function ExpandButton({
         <div
           className={`grid gap-4 transition-opacity duration-500 ${windowHeight < 500 ? 'grid-cols-2 auto-rows-auto' : 'flex flex-col items-center'} ${optionsVisible ? 'opacity-100' : 'opacity-0'}`}
         >
-          {['About Me', 'Portfolio', 'Contact Me', 'Music Player'].map((label, index) => (
+          {['About Me', 'Portfolio', 'Contact Me', 'Extra'].map((label, index) => (
             <button
               key={index}
               className={baseButtonStyle}
