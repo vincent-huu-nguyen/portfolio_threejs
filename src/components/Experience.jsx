@@ -11,7 +11,7 @@ import walk2 from '../assets/TrainerFrame2.png';
 import walk3 from '../assets/TrainerFrame3.png';
 import walk4 from '../assets/TrainerFrame4.png';
 
-export const Experience = ({ position, size, color, zoomedOut = false }) => {
+export const Experience = ({ position, size, color, isStartZoomedOut = false, isContactZoomedOut = false }) => {
     const sphereRef = useRef();
     const spriteRef = useRef();
     const scrollDelta = useRef(0);
@@ -33,9 +33,51 @@ export const Experience = ({ position, size, color, zoomedOut = false }) => {
     });
 
     const spring = useSpring({
-        scale: zoomedOut ? [0.9, 0.9, 0.9] : [1, 1, 1],
-        position: zoomedOut ? [0, -2.3, 0] : [0, -1.5, 0],
-        config: { tension: 120, friction: 18 },
+        from: {
+            scale: [1, 1, 1],
+            position: [0, -30, 0],     // start from far below
+            sphereY: -30               // match group Y position to slide up
+        },
+        to: {
+            scale: isContactZoomedOut
+                ? [0.11, 0.11, 0.11]
+                : isStartZoomedOut
+                    ? [0.9, 0.9, 0.9]
+                    : [1, 1, 1],
+            position: isContactZoomedOut
+                ? [0, -2.8, 0]
+                : isStartZoomedOut
+                    ? [0, -2.3, 0]
+                    : [0, -1.5, 0],
+            sphereY: isContactZoomedOut
+                ? -0.2
+                : isStartZoomedOut
+                    ? -17
+                    : -17
+        },
+        config: { tension: 120, friction: 18 }
+    });
+
+    const spriteSpring = useSpring({
+        from: {
+            scale: [1, 1, 1],
+            position: [0, -30, 0],     // start from far below
+            sphereY: -30               // match group Y position to slide up
+        },
+        to: {
+            position: isContactZoomedOut
+                ? [0, 0.9, 2] // Dramatically lower the sprite
+                : isStartZoomedOut
+                    ? [0, -2.25, 0]
+                    : [0, -1.5, 0],
+
+            scale: isContactZoomedOut
+                ? [0.2, 0.2, 0.2]
+                : isStartZoomedOut
+                    ? [0.7, 0.7, 0.7]
+                    : [1, 1, 1],
+        },
+        config: { tension: 150, friction: 21 },
     });
 
     useEffect(() => {
@@ -78,14 +120,14 @@ export const Experience = ({ position, size, color, zoomedOut = false }) => {
             <OrbitControls enableZoom={true} enableRotate={true} />
 
             {/* ✅ Animated sprite */}
-            <a.mesh ref={spriteRef} position={spring.position} scale={spring.scale}>
+            <a.mesh ref={spriteRef} position={spriteSpring.position} scale={spriteSpring.scale}>
                 <planeGeometry args={[1.25, 1.25]} />
                 <meshBasicMaterial map={walkFrames[frameIndex]} transparent />
             </a.mesh>
 
 
             {/* ✅ Animated group */}
-            <a.group ref={sphereRef} position-y={ySpring.y} scale={spring.scale} rotation={[0, 0, Math.PI / 2]}>
+            <a.group ref={sphereRef} position-y={spring.sphereY} scale={spring.scale} rotation={[0, 0, Math.PI / 2]}>
                 <mesh>
                     <sphereGeometry args={[14.9, 30, 30]} />
                     <meshStandardMaterial color={color} />

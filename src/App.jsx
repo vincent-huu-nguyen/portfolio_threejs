@@ -30,7 +30,7 @@ function App() {
       <div className="relative w-screen h-screen overflow-hidden">
         {/* UI Layer */}
         <div className="absolute z-10 w-full h-full pointer-events-auto">
-          <Home />
+          <Home isContactVisible={activeSection === 'contact' && showContact} />
           <BackgroundMusic ref={musicRef} />
 
           {activeSection === 'menu' && (
@@ -70,9 +70,11 @@ function App() {
               setShowContact(false);
               setTimeout(() => {
                 setActiveSection('menu');
-                setOptionsVisible(true);
-                setShowOptions(true);
-              }, 500);
+                setShowOptions(true); // Mount the buttons
+                setTimeout(() => {
+                  setOptionsVisible(true); // Then fade them in
+                }, 50);
+              }, 500); // Wait for Contact to slide out
             }}
           />
 
@@ -86,7 +88,8 @@ function App() {
               position={[0, -17, 0]}
               size={[15, 30, 30]}
               color="#000000"
-              zoomedOut={!showOptions}
+              isStartZoomedOut={!showOptions}
+              isContactZoomedOut={activeSection === 'contact' && showContact}
             />
 
           </Canvas>
