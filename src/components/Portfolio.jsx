@@ -155,18 +155,18 @@ const Portfolio = ({ isVisible, onBack }) => {
                 </h1>
 
                 <div ref={scrollRef} className="overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory">
-                    <div className="flex gap-6 w-max pb-6 px-4">
+                    <div className="flex gap-1 w-max pb-6 px-4">
                         {/* Spacer to allow first card to center */}
                         <div className="w-[50vw] shrink-0"></div>
 
                         {portfolio.map((item, index) => (
                             <div
                                 key={index}
-                                className={`card flex-shrink-0 snap-center w-96 transform transition-transform duration-200 
-  ${focusedIndex === index ? "scale-100 z-10" : "scale-85 z-0"}
+                                className={`card flex-shrink-0 snap-center w-75 transform transition-transform duration-200 
+  ${focusedIndex === index ? "scale-100 z-10" : "scale-75 z-0"}
   bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.5 rounded-md`}
                             >
-                                <div className="bg-[#0a0a0a] p-6 rounded-md shadow-md h-[400px] flex flex-col justify-between">
+                                <div className="bg-[#0a0a0a] p-2 rounded-md shadow-md h-[325px] flex flex-col justify-between">
                                     <img
                                         src={item.slideshowImages[currentImageIndices[index] || 0]}
                                         alt={item.title}
