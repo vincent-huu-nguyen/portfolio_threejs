@@ -25,6 +25,7 @@ import Livingroom from "../assets/livingroom.png";
 const Portfolio = ({ isVisible, onBack }) => {
     const scrollRef = useRef(null);
     const [currentImageIndices, setCurrentImageIndices] = useState([]);
+    const [focusedIndex, setFocusedIndex] = useState(0);
 
 
     const portfolio = useMemo(() => [
@@ -115,6 +116,32 @@ const Portfolio = ({ isVisible, onBack }) => {
         return () => clearInterval(intervalId);
     }, [portfolio]);
 
+    useEffect(() => {
+        const container = scrollRef.current;
+        if (!container) return;
+
+        const handleScroll = () => {
+            const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+            const cards = container.querySelectorAll(".card");
+
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+
+            cards.forEach((card, index) => {
+                const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+                const distance = Math.abs(containerCenter - cardCenter);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = index;
+                }
+            });
+
+            setFocusedIndex(closestIndex);
+        };
+
+        container.addEventListener("scroll", handleScroll, { passive: true });
+        return () => container.removeEventListener("scroll", handleScroll);
+    }, []);
 
 
     return (
@@ -135,7 +162,9 @@ const Portfolio = ({ isVisible, onBack }) => {
                         {portfolio.map((item, index) => (
                             <div
                                 key={index}
-                                className="card flex-shrink-0 snap-center w-96 bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.5 rounded-md"
+                                className={`card flex-shrink-0 snap-center w-96 transform transition-transform duration-200 
+  ${focusedIndex === index ? "scale-100 z-10" : "scale-85 z-0"}
+  bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.5 rounded-md`}
                             >
                                 <div className="bg-[#0a0a0a] p-6 rounded-md shadow-md h-[400px] flex flex-col justify-between">
                                     <img
@@ -162,7 +191,7 @@ const Portfolio = ({ isVisible, onBack }) => {
                 <div className="flex justify-center">
                     <button
                         onClick={onBack}
-                        className="text-white text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black transition"
+                        className="text-white text-sm border border-white px-4 py-2 mt-2 rounded hover:bg-white hover:text-black transition"
                     >
                         Back
                     </button>
