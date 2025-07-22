@@ -149,12 +149,15 @@ const Portfolio = ({ isVisible, onBack }) => {
                 const scrollTo = lastCardCenter - containerCenter;
 
                 // Step 2: Instantly jump scroll to last card
-                container.scrollLeft = scrollTo;
+                requestAnimationFrame(() => {
+                    container.scrollLeft = scrollTo;
+                });
+
 
                 // Step 3: Smooth scroll to first card after delay
                 setTimeout(() => {
                     firstCard.scrollIntoView({ behavior: "smooth", inline: "center" });
-                }, 300);
+                }, 800);
             }
         }
     }, [isVisible]);
