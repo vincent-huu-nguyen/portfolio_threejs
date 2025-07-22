@@ -9,6 +9,10 @@ import walk1 from "../assets/TrainerFrame1.png";
 import walk2 from "../assets/TrainerFrame2.png";
 import walk3 from "../assets/TrainerFrame3.png";
 import walk4 from "../assets/TrainerFrame4.png";
+import side1 from "../assets/TrainerSide1.png";
+import side2 from "../assets/TrainerSide2.png";
+import side3 from "../assets/TrainerSide3.png";
+import side4 from "../assets/TrainerSide4.png";
 
 export const Experience = ({
     position,
@@ -32,7 +36,14 @@ export const Experience = ({
 
     const texture = useTexture(gradientImage);
     const walkFrames = useLoader(TextureLoader, [walk1, walk2, walk3, walk4]);
+    const sideFrames = useLoader(TextureLoader, [side1, side2, side3, side4]);
+
+    const activeFrames = isPortfolioVisible ? sideFrames : walkFrames;
     const [frameIndex, setFrameIndex] = useState(0);
+    const spriteRotation = isPortfolioVisible
+        ? [0, Math.PI / 2, 0] // rotate 90° around Y to face side
+        : [0, 0, 0]; // default forward
+
 
     const spring = useSpring({
         from: {
@@ -62,16 +73,20 @@ export const Experience = ({
             position: [0, -30, 0],
         },
         to: {
-            position: isContactZoomedOut
-                ? [0, 0.9, 2]
-                : isStartZoomedOut
-                    ? [0, -2.25, 0]
-                    : [0, -1.5, 0],
-            scale: isContactZoomedOut
-                ? [0.2, 0.2, 0.2]
-                : isStartZoomedOut
-                    ? [0.7, 0.7, 0.7]
-                    : [1, 1, 1],
+            position: isPortfolioVisible
+                ? [1, -3.1, 0] // 👈 position for Portfolio view
+                : isContactZoomedOut
+                    ? [0, 0.9, 2]
+                    : isStartZoomedOut
+                        ? [0, -2.25, 0]
+                        : [0, -1.5, 0],
+            scale: isPortfolioVisible
+                ? [1, 1, 1] // 👈 optionally tweak scale too
+                : isContactZoomedOut
+                    ? [0.2, 0.2, 0.2]
+                    : isStartZoomedOut
+                        ? [0.7, 0.7, 0.7]
+                        : [1, 1, 1],
         },
         config: { tension: 150, friction: 21 },
     });
@@ -115,7 +130,7 @@ export const Experience = ({
         if (!originalCameraPosition.current) return;
 
         const targetPosition = isPortfolioVisible
-            ? { x: 7, y: -3, z: 5 } // 👈 Portfolio view
+            ? { x: 7, y: -3, z: 0 } // 👈 Portfolio view
             : originalCameraPosition.current; // 👈 Return to default
 
         const duration = 1000;
@@ -181,6 +196,7 @@ export const Experience = ({
                         borderRadius: "8px",
                         fontSize: "12px",
                         whiteSpace: "nowrap",
+                        opacity: "0%" //make it invisible
                     }}
                 >
                     {`📷 Camera: (${camera.position.x.toFixed(2)}, ${camera.position.y.toFixed(2)}, ${camera.position.z.toFixed(2)})`}
@@ -188,9 +204,14 @@ export const Experience = ({
             </Html>
 
             {/* ✅ Sprite character */}
-            <a.mesh ref={spriteRef} position={spriteSpring.position} scale={spriteSpring.scale}>
+            <a.mesh
+                ref={spriteRef}
+                position={spriteSpring.position}
+                scale={spriteSpring.scale}
+                rotation={spriteRotation} // 👈 add this
+            >
                 <planeGeometry args={[1.25, 1.25]} />
-                <meshBasicMaterial map={walkFrames[frameIndex]} transparent />
+                <meshBasicMaterial map={activeFrames[frameIndex]} transparent />
             </a.mesh>
 
             {/* ✅ Sphere & rotating scene */}
