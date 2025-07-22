@@ -31,6 +31,7 @@ const Portfolio = ({ isVisible, onBack }) => {
         {
             img: musicChanges,
             title: "Cents Music Player",
+            tech: ["HTML", "CSS", "JavaScript", "Web Audio API"],
             desc: "A fully functional web-based music player featuring original tracks produced by me.",
             live: "https://vincent-huu-nguyen.github.io/Cents_Music_Player/",
             git: "https://github.com/vincent-huu-nguyen/Cents_Music_Player",
@@ -39,6 +40,7 @@ const Portfolio = ({ isVisible, onBack }) => {
         {
             img: redPandaBash,
             title: "Red Panda Bash",
+            tech: ["Godot", "GDScript"],
             desc: "Platformer arcade game built in Godot. Use bamboos to duel with others in action-packed matches.",
             live: "https://cents808.itch.io/red-panda-bash",
             git: "https://github.com/vincent-huu-nguyen/platform_game",
@@ -47,6 +49,7 @@ const Portfolio = ({ isVisible, onBack }) => {
         {
             img: snatched,
             title: "Snatched",
+            tech: ["Unity", "C#"],
             desc: "Action horror RPG game made in Unity. Search for your missing daughter in a cursed orphanage.",
             live: "https://salslinger.itch.io/snatched",
             git: "https://github.com/Salslinger/CSE-4304-Team-Project",
@@ -55,6 +58,7 @@ const Portfolio = ({ isVisible, onBack }) => {
         {
             img: PortfolioWebsite,
             title: "Portfolio Website",
+            tech: ["React", "TailwindCSS"],
             desc: "My personal website built with React, Three.js, TailwindCSS, and Framer Motion.",
             live: "https://vincent-nguyen.vercel.app/",
             git: "https://github.com/vincent-huu-nguyen/vincent_nguyen_website",
@@ -63,6 +67,7 @@ const Portfolio = ({ isVisible, onBack }) => {
         {
             img: vgdoWebsite,
             title: "VGDO Website",
+            tech: ["HTML", "CSS", "JavaScript"],
             desc: "Official site for the VGDO club at UTA, housing events and submission tools.",
             live: "https://uta-vgdo.github.io/website/",
             git: "https://github.com/uta-vgdo/website",
@@ -71,6 +76,7 @@ const Portfolio = ({ isVisible, onBack }) => {
         {
             img: rhythmixLogo,
             title: "Rhythmix",
+            tech: ["Unity", "C#"],
             desc: "A Unity rhythm game where you tap in sync with music. Multiple difficulty levels.",
             live: "https://salslinger.itch.io/rhythmix",
             git: "https://github.com/Salslinger/Rhythmix",
@@ -79,6 +85,7 @@ const Portfolio = ({ isVisible, onBack }) => {
         {
             img: statefarmLogo,
             title: "Statefarm Hazard Game",
+            tech: ["Godot", "GDScript"],
             desc: "Godot-made Hackathon game. Spot home hazards in different rooms.",
             live: "https://salslinger.itch.io/statefarm-interactive-hazard-game",
             git: "https://github.com/KehniWind/Statefarm-Game",
@@ -145,7 +152,7 @@ const Portfolio = ({ isVisible, onBack }) => {
                         {portfolio.map((item, index) => (
                             <div
                                 key={index}
-                                className={`card flex-shrink-0 snap-center w-[300px] transform transition-all duration-300 ease-out 
+                                className={`card flex-shrink-0 snap-center w-[350px] transform transition-all duration-300 ease-out 
     ${Math.abs(focusedIndex - index) <= 1
                                         ? `${focusedIndex === index ? "scale-100 z-10 opacity-100" : "scale-75 z-0 opacity-100"}`
                                         : "scale-75 z-0 opacity-0 pointer-events-none"
@@ -153,13 +160,23 @@ const Portfolio = ({ isVisible, onBack }) => {
     bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.25 rounded-md`}
 
                             >
-                                <div className="bg-[#0a0a0a] p-2 rounded-md shadow-md h-[325px] flex flex-col justify-between">
+                                <div className="bg-[#0a0a0a] p-2 rounded-md shadow-md min-h-[325px] flex flex-col justify-between">
                                     <img
                                         src={item.slideshowImages[currentImageIndices[index] || 0]}
                                         alt={item.title}
-                                        className="object-contain rounded-md mb-2 h-64 w-full"
+                                        className="object-contain rounded-md h-64 w-full"
                                     />
                                     <p className="text-md text-[#f7f8f8] font-semibold">{item.title}</p>
+                                    <div className="flex flex-wrap gap-1 mt-1 mb-2">
+                                        {item.tech.map((tech, i) => (
+                                            <span
+                                                key={i}
+                                                className="bg-gray-800 text-white text-[10px] px-2 py-0.5 rounded-full"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
                                     <p className="text-xs text-gray-400 line-clamp-3">{item.desc}</p>
                                     <div className="mt-4 flex justify-center gap-2">
                                         <a href={item.live} target="_blank" rel="noreferrer" className="text-white underline text-sm">Live</a>
