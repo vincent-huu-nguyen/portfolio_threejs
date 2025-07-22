@@ -204,7 +204,7 @@ const Portfolio = ({ isVisible, onBack }) => {
     bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.25 rounded-md`}
 
                             >
-                                <div className="bg-[#0a0a0a] p-2 rounded-md shadow-md min-h-[325px] flex flex-col justify-between">
+                                <div className="bg-[#030303] p-2 rounded-md shadow-md min-h-[325px] flex flex-col justify-between">
                                     <img
                                         src={item.slideshowImages[currentImageIndices[index] || 0]}
                                         alt={item.title}
