@@ -2,5 +2,29 @@
   min-width: 100vw;
   min-height: 100vh;
   background-color: #030303;
-  background-image: linear-gradient(0deg, #0c0c0cff 0%, #000000ff 100%);
+  /*background-image: linear-gradient(0deg, rgb(10, 10, 10) 0%, #000000ff 100%);*/
+}
+
+/* Custom horizontal scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1f1f1f; /* Track color */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #6366f1; /* Thumb color (e.g. indigo-500) */
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #818cf8; /* Slightly lighter on hover */
+}
+
+/* Firefox support */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #3F51B5 #030303;
 }

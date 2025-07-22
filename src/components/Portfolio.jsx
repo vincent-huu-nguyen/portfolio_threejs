@@ -129,26 +129,29 @@ const Portfolio = ({ isVisible, onBack }) => {
 
     return (
         <div
-            className={`fixed top-30 left-0 w-full h-full z-20 px-4 transition-all duration-500 ease-in-out ${
-                isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
-            }`}
+            className={`fixed top-30 left-0 w-full h-full z-20 px-4 transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+                }`}
         >
             <section className="py-10 max-w-6xl mx-auto">
                 <h1 className="opacity-0 text-4xl text-center text-[#f7f8f8] font-bold mb-8 hover:bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 hover:text-transparent hover:bg-clip-text hover:scale-110 duration-200">
                     PORTFOLIO
                 </h1>
 
-                <div ref={scrollRef} className="overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory">
-                    <div className="flex gap-0 w-max pb-6 px-4">
+                <div ref={scrollRef} className="custom-scrollbar overflow-x-auto scroll-smooth snap-x snap-mandatory">
+                    <div className="flex w-max pb-6 px-4">
                         {/* Spacer to center first card */}
                         <div className="shrink-0 w-[calc(50vw-150px)]"></div>
 
                         {portfolio.map((item, index) => (
                             <div
                                 key={index}
-                                className={`card flex-shrink-0 snap-center w-[300px] transform transition-transform duration-200 
-                                    ${focusedIndex === index ? "scale-100 z-10" : "scale-75 z-0"}
-                                    bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.5 rounded-md`}
+                                className={`card flex-shrink-0 snap-center w-[300px] transform transition-all duration-300 ease-out 
+    ${Math.abs(focusedIndex - index) <= 1
+                                        ? `${focusedIndex === index ? "scale-100 z-10 opacity-100" : "scale-75 z-0 opacity-100"}`
+                                        : "scale-75 z-0 opacity-0 pointer-events-none"
+                                    }
+    bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.5 rounded-md`}
+
                             >
                                 <div className="bg-[#0a0a0a] p-2 rounded-md shadow-md h-[325px] flex flex-col justify-between">
                                     <img
