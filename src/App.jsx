@@ -112,6 +112,7 @@ function App() {
               color="#000000"
               isStartZoomedOut={!showOptions}
               isContactZoomedOut={activeSection === 'contact' && showContact}
+              isPortfolioVisible={activeSection === 'portfolio'}
             />
 
           </Canvas>

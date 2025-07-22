@@ -21,11 +21,19 @@ import statefarmLogo from "../assets/statefarmLogo.png";
 import Statefarm from "../assets/Statefarm.png";
 import Kitchen from "../assets/kitchen.png";
 import Livingroom from "../assets/livingroom.png";
+import useSoundEffect from '../hooks/useSoundEffect';
+import backSoundFile from '../assets/back.mp3';
+import hoverSoundFile from '../assets/hover.wav';
+
+
 
 const Portfolio = ({ isVisible, onBack }) => {
     const scrollRef = useRef(null);
     const [currentImageIndices, setCurrentImageIndices] = useState([]);
     const [focusedIndex, setFocusedIndex] = useState(0);
+    const playBack = useSoundEffect(backSoundFile);
+      const playHover = useSoundEffect(hoverSoundFile);
+    
 
     const portfolio = useMemo(() => [
         {
@@ -92,6 +100,11 @@ const Portfolio = ({ isVisible, onBack }) => {
             slideshowImages: [Statefarm, Kitchen, Livingroom],
         },
     ], []);
+
+    const handleBackClick = () => {
+        playBack();
+        onBack?.();
+    };
 
     useEffect(() => {
         setCurrentImageIndices(Array(portfolio.length).fill(0));
@@ -171,7 +184,7 @@ const Portfolio = ({ isVisible, onBack }) => {
                 }`}
         >
             <section className="py-10 max-w-6xl mx-auto">
-                <h1 className="opacity-0 text-4xl text-center text-[#f7f8f8] font-bold mb-8 hover:bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 hover:text-transparent hover:bg-clip-text hover:scale-110 duration-200">
+                <h1 className="opacity-0 text-4xl text-center text-[#f7f8f8] font-bold mb-2 hover:bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 hover:text-transparent hover:bg-clip-text hover:scale-110 duration-200">
                     PORTFOLIO
                 </h1>
 
@@ -225,8 +238,9 @@ const Portfolio = ({ isVisible, onBack }) => {
                 {/* Back Button */}
                 <div className="flex justify-center">
                     <button
-                        onClick={onBack}
-                        className="text-white text-sm border border-white px-4 py-2 mt-2 rounded hover:bg-white hover:text-black transition"
+                        onMouseEnter={playHover}
+                        onClick={handleBackClick}
+                        className="w-40 h-12 text-white border-2 border-white transition duration-500 hover:scale-110"
                     >
                         Back
                     </button>
