@@ -21,6 +21,11 @@ import statefarmLogo from "../assets/statefarmLogo.png";
 import Statefarm from "../assets/Statefarm.png";
 import Kitchen from "../assets/kitchen.png";
 import Livingroom from "../assets/livingroom.png";
+import PortfolioThreeJS from "../assets/portfolioThreeJS.gif"
+import PortfolioThreeJS1 from "../assets/portfolioThreeJS1.gif"
+import PortfolioThreeJS2 from "../assets/portfolioThreeJS2.gif"
+import PortfolioThreeJS3 from "../assets/portfolioThreeJS3.gif"
+
 import useSoundEffect from '../hooks/useSoundEffect';
 import backSoundFile from '../assets/back.mp3';
 import hoverSoundFile from '../assets/hover.wav';
@@ -32,15 +37,24 @@ const Portfolio = ({ isVisible, onBack }) => {
     const [currentImageIndices, setCurrentImageIndices] = useState([]);
     const [focusedIndex, setFocusedIndex] = useState(0);
     const playBack = useSoundEffect(backSoundFile);
-      const playHover = useSoundEffect(hoverSoundFile);
-    
+    const playHover = useSoundEffect(hoverSoundFile);
+
 
     const portfolio = useMemo(() => [
+        {
+            img: PortfolioThreeJS,
+            title: "Interactive 3D Portfolio Website",
+            tech: ["React", "Three.js", "React Three Fiber", "TailwindCSS", "Framer Motion", "JavaScript", "HTML", "CSS"],
+            desc: "A 3D portfolio website using React, Three.js, and modern front-end technologies, blending web application interactivity with a clean UI.",
+            live: "https://vincentnguyen.vercel.app/",
+            git: "https://github.com/vincent-huu-nguyen/portfolio_threejs",
+            slideshowImages: [PortfolioThreeJS1, PortfolioThreeJS2, PortfolioThreeJS3, PortfolioThreeJS],
+        },
         {
             img: musicChanges,
             title: "Cents Music Player",
             tech: ["HTML", "CSS", "JavaScript", "Web Audio API"],
-            desc: "A fully functional web-based music player featuring original tracks produced by me.",
+            desc: "A fully functional web-based music player featuring a curated collection of original tracks produced by me. Stream and explore my music directly from your browser.",
             live: "https://vincent-huu-nguyen.github.io/Cents_Music_Player/",
             git: "https://github.com/vincent-huu-nguyen/Cents_Music_Player",
             slideshowImages: [musicJourney, musicProm, musicChanges],
@@ -49,7 +63,7 @@ const Portfolio = ({ isVisible, onBack }) => {
             img: redPandaBash,
             title: "Red Panda Bash",
             tech: ["Godot", "GDScript"],
-            desc: "Platformer arcade game built in Godot. Use bamboos to duel with others in action-packed matches.",
+            desc: "A platformer arcade-esque game built in the Godot Engine. Play as a skilled red panda, using your agility and precision to dodge and throw bamboos with pinpoint accuracy. Challenge other red pandas in fast-paced, action-packed duels.",
             live: "https://cents808.itch.io/red-panda-bash",
             git: "https://github.com/vincent-huu-nguyen/platform_game",
             slideshowImages: [redPandaBash, battleRPB, battleRPB2],
@@ -58,16 +72,16 @@ const Portfolio = ({ isVisible, onBack }) => {
             img: snatched,
             title: "Snatched",
             tech: ["Unity", "C#"],
-            desc: "Action horror RPG game made in Unity. Search for your missing daughter in a cursed orphanage.",
+            desc: "An action RPG horror game built in the Unity Engine. Play as a detective searching for his missing daughter in a forgotten town and an eerie orphanage, The Happy Place. Battle twisted enemies and uncover the dark truth buried in its past.",
             live: "https://salslinger.itch.io/snatched",
             git: "https://github.com/Salslinger/CSE-4304-Team-Project",
             slideshowImages: [snatched, snatched1, snatched2, snatched3, snatched4, snatched5],
         },
         {
             img: PortfolioWebsite,
-            title: "Portfolio Website",
-            tech: ["React", "TailwindCSS"],
-            desc: "My personal website built with React, Three.js, TailwindCSS, and Framer Motion.",
+            title: "Simple Portfolio Website",
+            tech: ["React", "TailwindCSS", "HTML", "CSS", "JavaScript"],
+            desc: "My simple personal portfolio website showcasing projects in software engineering, web and game development.",
             live: "https://vincent-nguyen.vercel.app/",
             git: "https://github.com/vincent-huu-nguyen/vincent_nguyen_website",
             slideshowImages: [PortfolioWebsite],
@@ -76,7 +90,7 @@ const Portfolio = ({ isVisible, onBack }) => {
             img: vgdoWebsite,
             title: "VGDO Website",
             tech: ["HTML", "CSS", "JavaScript"],
-            desc: "Official site for the VGDO club at UTA, housing events and submission tools.",
+            desc: "The official website for the VGDO (Video Game Developers Organization) at UTA. It is a central hub for club updates, event details, jam submissions, and resources for students interested in game development.",
             live: "https://uta-vgdo.github.io/website/",
             git: "https://github.com/uta-vgdo/website",
             slideshowImages: [vgdoWebsite],
@@ -85,7 +99,7 @@ const Portfolio = ({ isVisible, onBack }) => {
             img: rhythmixLogo,
             title: "Rhythmix",
             tech: ["Unity", "C#"],
-            desc: "A Unity rhythm game where you tap in sync with music. Multiple difficulty levels.",
+            desc: "A rhythm game built in Unity where players tap keys in sync with the music to score points. Features multiple difficulty levels to test your timing, precision, and rhythm.",
             live: "https://salslinger.itch.io/rhythmix",
             git: "https://github.com/Salslinger/Rhythmix",
             slideshowImages: [rhythmixLogo, rhythmix1, rhythmix2, rhythmix3],
@@ -94,7 +108,7 @@ const Portfolio = ({ isVisible, onBack }) => {
             img: statefarmLogo,
             title: "Statefarm Hazard Game",
             tech: ["Godot", "GDScript"],
-            desc: "Godot-made Hackathon game. Spot home hazards in different rooms.",
+            desc: "An interactive game using the Godot Engine. Created in HackUTA 2023. The game brings awareness to the player about hazards in homes.",
             live: "https://salslinger.itch.io/statefarm-interactive-hazard-game",
             git: "https://github.com/KehniWind/Statefarm-Game",
             slideshowImages: [Statefarm, Kitchen, Livingroom],
@@ -204,11 +218,11 @@ const Portfolio = ({ isVisible, onBack }) => {
     bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.25 rounded-md`}
 
                             >
-                                <div className="bg-[#030303] p-2 rounded-md shadow-md min-h-[325px] flex flex-col justify-between">
+                                <div className="bg-[#030303] p-2 rounded-md shadow-md h-[425px] flex flex-col justify-between">
                                     <img
                                         src={item.slideshowImages[currentImageIndices[index] || 0]}
                                         alt={item.title}
-                                        className="object-contain rounded-md h-64 w-full"
+                                        className="object-contain rounded-lg h-64 w-full"
                                     />
                                     <p className="text-md text-[#f7f8f8] font-semibold">{item.title}</p>
                                     <div className="flex flex-wrap gap-1 mt-1 mb-2">
@@ -221,7 +235,7 @@ const Portfolio = ({ isVisible, onBack }) => {
                                             </span>
                                         ))}
                                     </div>
-                                    <p className="text-xs text-gray-400 line-clamp-3">{item.desc}</p>
+                                    <p className="text-xs text-gray-400 line-clamp-4 flex-grow">{item.desc}</p>
                                     <div className="mt-4 flex justify-center gap-2">
                                         <a href={item.live} target="_blank" rel="noreferrer" className="text-white underline text-sm">Live</a>
                                         <a href={item.git} target="_blank" rel="noreferrer" className="text-white underline text-sm">GitHub</a>
