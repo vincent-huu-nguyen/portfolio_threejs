@@ -150,7 +150,7 @@ const Portfolio = ({ isVisible, onBack }) => {
                                         ? `${focusedIndex === index ? "scale-100 z-10 opacity-100" : "scale-75 z-0 opacity-100"}`
                                         : "scale-75 z-0 opacity-0 pointer-events-none"
                                     }
-    bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.5 rounded-md`}
+    bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.25 rounded-md`}
 
                             >
                                 <div className="bg-[#0a0a0a] p-2 rounded-md shadow-md h-[325px] flex flex-col justify-between">
