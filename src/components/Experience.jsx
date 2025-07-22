@@ -1,42 +1,44 @@
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Html, useTexture } from "@react-three/drei";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { useRef, useState, useEffect } from "react";
-import { useSpring, a } from '@react-spring/three';
+import { useSpring, a } from "@react-spring/three";
 import { TextureLoader } from "three";
-import { useTexture } from "@react-three/drei";
 
-import gradientImage from '../assets/gradient.png';
-import walk1 from '../assets/TrainerFrame1.png';
-import walk2 from '../assets/TrainerFrame2.png';
-import walk3 from '../assets/TrainerFrame3.png';
-import walk4 from '../assets/TrainerFrame4.png';
+import gradientImage from "../assets/gradient.png";
+import walk1 from "../assets/TrainerFrame1.png";
+import walk2 from "../assets/TrainerFrame2.png";
+import walk3 from "../assets/TrainerFrame3.png";
+import walk4 from "../assets/TrainerFrame4.png";
 
-export const Experience = ({ position, size, color, isStartZoomedOut = false, isContactZoomedOut = false }) => {
+export const Experience = ({
+    position,
+    size,
+    color,
+    isStartZoomedOut = false,
+    isContactZoomedOut = false,
+    isPortfolioVisible = false,
+}) => {
     const sphereRef = useRef();
     const spriteRef = useRef();
     const scrollDelta = useRef(0);
-    const { gl } = useThree();
-
-    const texture = useTexture(gradientImage);
-    const walkFrames = useLoader(TextureLoader, [walk1, walk2, walk3, walk4]);
-    const [frameIndex, setFrameIndex] = useState(0);
     const elapsedRef = useRef(0);
     const frameDuration = 0.15;
     const lastScrollTime = useRef(0);
     const scrollCooldown = 0.1;
+    const originalCameraPosition = useRef(null);
 
-    // Smooth Y spring
-    const ySpring = useSpring({
-        from: { y: -30 },
-        to: { y: -17 },
-        config: { tension: 80, friction: 15 },
-    });
+
+    const { gl, camera } = useThree();
+
+    const texture = useTexture(gradientImage);
+    const walkFrames = useLoader(TextureLoader, [walk1, walk2, walk3, walk4]);
+    const [frameIndex, setFrameIndex] = useState(0);
 
     const spring = useSpring({
         from: {
             scale: [1, 1, 1],
-            position: [0, -30, 0],     // start from far below
-            sphereY: -30               // match group Y position to slide up
+            position: [0, -30, 0],
+            sphereY: -30,
         },
         to: {
             scale: isContactZoomedOut
@@ -49,28 +51,22 @@ export const Experience = ({ position, size, color, isStartZoomedOut = false, is
                 : isStartZoomedOut
                     ? [0, -2.3, 0]
                     : [0, -1.5, 0],
-            sphereY: isContactZoomedOut
-                ? -0.2
-                : isStartZoomedOut
-                    ? -17
-                    : -17
+            sphereY: isContactZoomedOut ? -0.2 : -17,
         },
-        config: { tension: 120, friction: 18 }
+        config: { tension: 120, friction: 18 },
     });
 
     const spriteSpring = useSpring({
         from: {
             scale: [1, 1, 1],
-            position: [0, -30, 0],     // start from far below
-            sphereY: -30               // match group Y position to slide up
+            position: [0, -30, 0],
         },
         to: {
             position: isContactZoomedOut
-                ? [0, 0.9, 2] // Dramatically lower the sprite
+                ? [0, 0.9, 2]
                 : isStartZoomedOut
                     ? [0, -2.25, 0]
                     : [0, -1.5, 0],
-
             scale: isContactZoomedOut
                 ? [0.2, 0.2, 0.2]
                 : isStartZoomedOut
@@ -79,6 +75,32 @@ export const Experience = ({ position, size, color, isStartZoomedOut = false, is
         },
         config: { tension: 150, friction: 21 },
     });
+
+    // Log camera position after user interaction
+    useEffect(() => {
+        const handleCameraChange = () => {
+            console.log("📸 Camera Position:", {
+                x: camera.position.x.toFixed(2),
+                y: camera.position.y.toFixed(2),
+                z: camera.position.z.toFixed(2),
+            });
+            console.log("🎯 Camera Rotation:", {
+                x: camera.rotation.x.toFixed(2),
+                y: camera.rotation.y.toFixed(2),
+                z: camera.rotation.z.toFixed(2),
+            });
+        };
+
+        gl.domElement.addEventListener("pointerup", handleCameraChange);
+        return () => gl.domElement.removeEventListener("pointerup", handleCameraChange);
+    }, [camera, gl]);
+
+    useEffect(() => {
+        if (!originalCameraPosition.current) {
+            originalCameraPosition.current = camera.position.clone();
+        }
+    }, [camera]);
+
 
     useEffect(() => {
         const handleScroll = (e) => {
@@ -89,16 +111,45 @@ export const Experience = ({ position, size, color, isStartZoomedOut = false, is
         return () => canvas.removeEventListener("wheel", handleScroll);
     }, [gl]);
 
+    useEffect(() => {
+        if (!originalCameraPosition.current) return;
+
+        const targetPosition = isPortfolioVisible
+            ? { x: 7, y: -3, z: 5 } // 👈 Portfolio view
+            : originalCameraPosition.current; // 👈 Return to default
+
+        const duration = 1000;
+        const start = performance.now();
+        const from = { ...camera.position };
+
+        const animate = (now) => {
+            const elapsed = now - start;
+            const t = Math.min(elapsed / duration, 1);
+
+            camera.position.x = from.x + (targetPosition.x - from.x) * t;
+            camera.position.y = from.y + (targetPosition.y - from.y) * t;
+            camera.position.z = from.z + (targetPosition.z - from.z) * t;
+            camera.lookAt(0, 0, 0);
+
+            if (t < 1) requestAnimationFrame(animate);
+        };
+
+        requestAnimationFrame(animate);
+    }, [isPortfolioVisible, camera]);
+
+
+
     useFrame((state, delta) => {
         if (sphereRef.current) sphereRef.current.rotation.x -= delta * 0.1;
 
-        // Animate sprite only after scroll
+        // Animate sprite
         elapsedRef.current += delta;
         if (elapsedRef.current >= frameDuration) {
             elapsedRef.current = 0;
             setFrameIndex((prev) => (prev + 1) % walkFrames.length);
         }
 
+        // Scroll interaction
         if (scrollDelta.current !== 0) {
             if (sphereRef.current) sphereRef.current.rotation.x -= scrollDelta.current;
             scrollDelta.current = 0;
@@ -117,17 +168,38 @@ export const Experience = ({ position, size, color, isStartZoomedOut = false, is
 
     return (
         <>
+            {/* ✅ Orbit Controls must be present as JSX */}
             <OrbitControls enableZoom={true} enableRotate={true} />
 
-            {/* ✅ Animated sprite */}
+            {/* ✅ On-screen camera position display */}
+            <Html position={[0, 5, 0]} center>
+                <div
+                    style={{
+                        background: "rgba(0, 0, 0, 0.6)",
+                        color: "white",
+                        padding: "6px 10px",
+                        borderRadius: "8px",
+                        fontSize: "12px",
+                        whiteSpace: "nowrap",
+                    }}
+                >
+                    {`📷 Camera: (${camera.position.x.toFixed(2)}, ${camera.position.y.toFixed(2)}, ${camera.position.z.toFixed(2)})`}
+                </div>
+            </Html>
+
+            {/* ✅ Sprite character */}
             <a.mesh ref={spriteRef} position={spriteSpring.position} scale={spriteSpring.scale}>
                 <planeGeometry args={[1.25, 1.25]} />
                 <meshBasicMaterial map={walkFrames[frameIndex]} transparent />
             </a.mesh>
 
-
-            {/* ✅ Animated group */}
-            <a.group ref={sphereRef} position-y={spring.sphereY} scale={spring.scale} rotation={[0, 0, Math.PI / 2]}>
+            {/* ✅ Sphere & rotating scene */}
+            <a.group
+                ref={sphereRef}
+                position-y={spring.sphereY}
+                scale={spring.scale}
+                rotation={[0, 0, Math.PI / 2]}
+            >
                 <mesh>
                     <sphereGeometry args={[14.9, 30, 30]} />
                     <meshStandardMaterial color={color} />
