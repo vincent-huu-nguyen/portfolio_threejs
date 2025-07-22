@@ -75,6 +75,19 @@ function App() {
               }, 500); // Match AboutMe slide-out duration
             }}
           />
+          
+          <Portfolio
+            isVisible={activeSection === 'portfolio' && showPortfolio}
+            onBack={() => {
+              setShowPortfolio(false);
+              setTimeout(() => {
+                setActiveSection('menu');
+                setShowOptions(true);
+                setTimeout(() => setOptionsVisible(true), 50);
+              }, 500);
+            }}
+          />
+
           <Contact
             isVisible={activeSection === 'contact' && showContact}
             onBack={() => {
@@ -86,17 +99,6 @@ function App() {
                   setOptionsVisible(true); // Then fade them in
                 }, 50);
               }, 500); // Wait for Contact to slide out
-            }}
-          />
-          <Portfolio
-            isVisible={activeSection === 'portfolio' && showPortfolio}
-            onBack={() => {
-              setShowPortfolio(false);
-              setTimeout(() => {
-                setActiveSection('menu');
-                setShowOptions(true);
-                setTimeout(() => setOptionsVisible(true), 50);
-              }, 500);
             }}
           />
 

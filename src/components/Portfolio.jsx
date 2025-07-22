@@ -194,11 +194,11 @@ const Portfolio = ({ isVisible, onBack }) => {
 
     return (
         <div
-            className={`fixed top-30 left-0 w-full h-full z-20 px-4 transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+            className={`fixed top-10 left-0 w-full h-full z-20 px-4 transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
                 }`}
         >
             <section className="py-10 max-w-6xl mx-auto">
-                <h1 className="opacity-0 text-4xl text-center text-[#f7f8f8] font-bold mb-2 hover:bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 hover:text-transparent hover:bg-clip-text hover:scale-110 duration-200">
+                <h1 className="flex items-center justify-center flex-col text-center opacity-100 text-4xl md:text-5xl font-bold mb-10 bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 text-transparent bg-clip-text hover:scale-110 duration-200">
                     PORTFOLIO
                 </h1>
 
