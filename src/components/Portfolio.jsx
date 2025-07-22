@@ -134,6 +134,34 @@ const Portfolio = ({ isVisible, onBack }) => {
         return () => container.removeEventListener("scroll", handleScroll);
     }, []);
 
+    useEffect(() => {
+        if (isVisible && scrollRef.current) {
+            const container = scrollRef.current;
+            const cards = container.querySelectorAll(".card");
+
+            if (cards.length > 0) {
+                const lastCard = cards[cards.length - 1];
+                const firstCard = cards[0];
+
+                // Step 1: Get the center position of the last card
+                const containerCenter = container.offsetWidth / 2;
+                const lastCardCenter = lastCard.offsetLeft + lastCard.offsetWidth / 2;
+                const scrollTo = lastCardCenter - containerCenter;
+
+                // Step 2: Instantly jump scroll to last card
+                container.scrollLeft = scrollTo;
+
+                // Step 3: Smooth scroll to first card after delay
+                setTimeout(() => {
+                    firstCard.scrollIntoView({ behavior: "smooth", inline: "center" });
+                }, 300);
+            }
+        }
+    }, [isVisible]);
+
+
+
+
     return (
         <div
             className={`fixed top-30 left-0 w-full h-full z-20 px-4 transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
