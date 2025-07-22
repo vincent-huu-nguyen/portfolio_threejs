@@ -155,7 +155,7 @@ const Portfolio = ({ isVisible, onBack }) => {
                 </h1>
 
                 <div ref={scrollRef} className="overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory">
-                    <div className="flex -space-x-4 w-max pb-6 px-4">
+                    <div className="flex gap-0 w-max pb-6 px-4">
                         {/* Spacer to allow first card to center */}
                         <div className="w-[50vw] shrink-0"></div>
 
