@@ -162,7 +162,7 @@ const Portfolio = ({ isVisible, onBack }) => {
                         {portfolio.map((item, index) => (
                             <div
                                 key={index}
-                                className={`card flex-shrink-0 snap-center w-75 transform transition-transform duration-200 
+                                className={`card flex-shrink-0 snap-center w-70 transform transition-transform duration-200 
   ${focusedIndex === index ? "scale-100 z-10" : "scale-75 z-0"}
   bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.5 rounded-md`}
                             >
