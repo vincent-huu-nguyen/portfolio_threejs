@@ -27,7 +27,6 @@ const Portfolio = ({ isVisible, onBack }) => {
     const [currentImageIndices, setCurrentImageIndices] = useState([]);
     const [focusedIndex, setFocusedIndex] = useState(0);
 
-
     const portfolio = useMemo(() => [
         {
             img: musicChanges,
@@ -88,22 +87,6 @@ const Portfolio = ({ isVisible, onBack }) => {
     ], []);
 
     useEffect(() => {
-        const scrollToCenter = () => {
-            if (scrollRef.current) {
-                const container = scrollRef.current;
-                const firstCard = container.querySelector(".card");
-                if (firstCard) {
-                    const containerCenter = container.offsetWidth / 2;
-                    const cardCenter = firstCard.offsetLeft + firstCard.offsetWidth / 2;
-                    container.scrollLeft = cardCenter - containerCenter;
-                }
-            }
-        };
-        const timeout = setTimeout(scrollToCenter, 100); // after mount
-        return () => clearTimeout(timeout);
-    }, []);
-
-    useEffect(() => {
         setCurrentImageIndices(Array(portfolio.length).fill(0));
     }, [portfolio]);
 
@@ -121,15 +104,16 @@ const Portfolio = ({ isVisible, onBack }) => {
         if (!container) return;
 
         const handleScroll = () => {
-            const containerCenter = container.scrollLeft + container.offsetWidth / 2;
             const cards = container.querySelectorAll(".card");
+            const viewportCenter = window.innerWidth / 2;
 
             let closestIndex = 0;
             let closestDistance = Infinity;
 
             cards.forEach((card, index) => {
-                const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-                const distance = Math.abs(containerCenter - cardCenter);
+                const rect = card.getBoundingClientRect();
+                const cardCenter = rect.left + rect.width / 2;
+                const distance = Math.abs(viewportCenter - cardCenter);
                 if (distance < closestDistance) {
                     closestDistance = distance;
                     closestIndex = index;
@@ -143,28 +127,28 @@ const Portfolio = ({ isVisible, onBack }) => {
         return () => container.removeEventListener("scroll", handleScroll);
     }, []);
 
-
     return (
         <div
-            className={`fixed top-0 left-0 w-full h-full z-20 px-4 transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
-                }`}
+            className={`fixed top-30 left-0 w-full h-full z-20 px-4 transition-all duration-500 ease-in-out ${
+                isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+            }`}
         >
             <section className="py-10 max-w-6xl mx-auto">
-                <h1 className="text-4xl text-center text-[#f7f8f8] font-bold mb-8 hover:bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 hover:text-transparent hover:bg-clip-text hover:scale-110 duration-200">
+                <h1 className="opacity-0 text-4xl text-center text-[#f7f8f8] font-bold mb-8 hover:bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 hover:text-transparent hover:bg-clip-text hover:scale-110 duration-200">
                     PORTFOLIO
                 </h1>
 
                 <div ref={scrollRef} className="overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory">
                     <div className="flex gap-0 w-max pb-6 px-4">
-                        {/* Spacer to allow first card to center */}
-                        <div className="w-[50vw] shrink-0"></div>
+                        {/* Spacer to center first card */}
+                        <div className="shrink-0 w-[calc(50vw-150px)]"></div>
 
                         {portfolio.map((item, index) => (
                             <div
                                 key={index}
-                                className={`card flex-shrink-0 snap-center w-75 transform transition-transform duration-200 
-  ${focusedIndex === index ? "scale-100 z-10" : "scale-75 z-0"}
-  bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.5 rounded-md`}
+                                className={`card flex-shrink-0 snap-center w-[300px] transform transition-transform duration-200 
+                                    ${focusedIndex === index ? "scale-100 z-10" : "scale-75 z-0"}
+                                    bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 p-0.5 rounded-md`}
                             >
                                 <div className="bg-[#0a0a0a] p-2 rounded-md shadow-md h-[325px] flex flex-col justify-between">
                                     <img
@@ -182,12 +166,12 @@ const Portfolio = ({ isVisible, onBack }) => {
                             </div>
                         ))}
 
-                        {/* Spacer to allow last card to center */}
-                        <div className="w-[50vw] shrink-0"></div>
+                        {/* Spacer to center last card */}
+                        <div className="shrink-0 w-[calc(50vw-150px)]"></div>
                     </div>
                 </div>
 
-                {/* Centered Back Button */}
+                {/* Back Button */}
                 <div className="flex justify-center">
                     <button
                         onClick={onBack}
