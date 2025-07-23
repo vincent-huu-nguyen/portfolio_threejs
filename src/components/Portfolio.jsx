@@ -30,7 +30,7 @@ import useSoundEffect from '../hooks/useSoundEffect';
 import backSoundFile from '../assets/back.mp3';
 import hoverSoundFile from '../assets/hover.wav';
 
-
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Portfolio = ({ isVisible, onBack }) => {
     const scrollRef = useRef(null);
@@ -165,7 +165,7 @@ const Portfolio = ({ isVisible, onBack }) => {
             clearTimeout(scrollTimeoutRef.current);
             scrollTimeoutRef.current = setTimeout(() => {
                 setShowSwipeHint(true);
-            }, 2000);
+            }, 1000); 
 
             return () => {
                 container.removeEventListener("scroll", handleScroll);
@@ -269,9 +269,9 @@ const Portfolio = ({ isVisible, onBack }) => {
     ${showSwipeHint ? (pulseOpacity ? 'opacity-100' : 'opacity-50') : 'opacity-0'}
   `}
                     >
-                        <span className="text-lg">⬅️</span>
+                        <FaArrowLeft className="text-sm text-indigo-400" />
                         <span className="bg-gradient-to-r from-indigo-500 via-indigo-500 to-indigo-500 text-transparent bg-clip-text">Swipe</span>
-                        <span className="text-lg">➡️</span>
+                        <FaArrowRight className="text-sm text-indigo-400" />
                     </div>
                 </div>
 
