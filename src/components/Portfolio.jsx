@@ -127,17 +127,11 @@ const Portfolio = ({ isVisible, onBack }) => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setCurrentImageIndices((prev) =>
-                prev.map((index, i) => {
-                    if (Math.abs(focusedIndex - i) <= 1) {
-                        return (index + 1) % portfolio[i].slideshowImages.length;
-                    }
-                    return index; // Keep it the same if not in view
-                })
+                prev.map((index, i) => (index + 1) % portfolio[i].slideshowImages.length)
             );
         }, 2000);
         return () => clearInterval(intervalId);
-    }, [portfolio, focusedIndex]);
-
+    }, [portfolio]);
 
     useEffect(() => {
         const container = scrollRef.current;
@@ -166,7 +160,7 @@ const Portfolio = ({ isVisible, onBack }) => {
         container.addEventListener("scroll", handleScroll, { passive: true });
         return () => container.removeEventListener("scroll", handleScroll);
     }, []);
-/*
+
     useEffect(() => {
         if (isVisible && scrollRef.current) {
             const container = scrollRef.current;
@@ -194,13 +188,13 @@ const Portfolio = ({ isVisible, onBack }) => {
             }
         }
     }, [isVisible]);
-*/
+
 
 
 
     return (
         <div
-            className={`fixed top-10 left-0 w-full h-full z-20 px-4 transition-all duration-500 ease-in-out ${isVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
+            className={`fixed top-10 left-0 w-full h-full z-20 px-4 transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
                 }`}
         >
             <section className="py-1 md:py-10 max-w-6xl mx-auto">
