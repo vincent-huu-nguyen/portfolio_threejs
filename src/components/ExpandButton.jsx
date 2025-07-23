@@ -15,12 +15,13 @@ export default function ExpandButton({
   showOptions,
   setShowOptions,
   musicRef, // 🎵 Add this prop to control music
+  isPlaying,
+  setIsPlaying
 }) {
   const [startVisible, setStartVisible] = useState(false);
   const [hideStart, setHideStart] = useState(false);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-  const [isPlaying, setIsPlaying] = useState(false); // 🎵 Track play/pause
   const [trackTitle, setTrackTitle] = useState(''); // 🎵 Now Playing
 
   const playHover = useSoundEffect(hoverSoundFile);
@@ -47,13 +48,6 @@ export default function ExpandButton({
 
     return () => clearInterval(interval);
   }, [musicRef, trackTitle]);
-
-  useEffect(() => {
-    if (showOptions && musicRef?.current?.isPlaying) {
-      const playing = musicRef.current.isPlaying();
-      setIsPlaying(playing);
-    }
-  }, [showOptions, musicRef]);
 
 
   const handleStartClick = () => {

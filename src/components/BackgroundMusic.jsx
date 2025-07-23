@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useRef, useEffect, useState } from 'react';
 import Changes from '../assets/changes.wav';
 import Journey from '../assets/Journey.wav';
-import BackToGold from '../assets/BackToGold.wav'; 
+import BackToGold from '../assets/BackToGold.wav';
 import Cold from '../assets/Cold.wav';
 import Distorted from '../assets/Distorted.wav';
 import DizzyCity from '../assets/dizzycity.wav';
@@ -22,7 +22,7 @@ const tracks = [
   { title: "Livin'", src: Livin },
 ];
 
-const BackgroundMusic = forwardRef((props, ref) => {
+const BackgroundMusic = forwardRef(({ onPlay, onPause }, ref) => {
   const audioRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -50,8 +50,14 @@ const BackgroundMusic = forwardRef((props, ref) => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
+    const handlePlay = () => {
+      setIsPlaying(true);
+      onPlay?.(); // ✅ Notify parent (e.g., ExpandButton or App)
+    };
+    const handlePause = () => {
+      setIsPlaying(false);
+      onPause?.(); // ✅ Notify parent
+    };
     const handleEnded = () => {
       const nextIndex = (currentIndex + 1) % tracks.length;
       setCurrentIndex(nextIndex);

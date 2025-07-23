@@ -19,6 +19,7 @@ function App() {
   const [showAboutMe, setShowAboutMe] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [showPortfolio, setShowPortfolio] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
 
   const musicRef = useRef();
@@ -38,7 +39,11 @@ function App() {
             isContactVisible={activeSection === 'contact' && showContact}
             isPortfolioVisible={activeSection === 'portfolio' && showPortfolio}
           />
-          <BackgroundMusic ref={musicRef} />
+          <BackgroundMusic
+            ref={musicRef}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+          />
 
           {activeSection === 'menu' && (
             <ExpandButton
@@ -60,6 +65,8 @@ function App() {
               showOptions={showOptions}
               setShowOptions={setShowOptions}
               musicRef={musicRef}
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
             />
           )}
 
@@ -76,7 +83,7 @@ function App() {
               }, 500); // Match AboutMe slide-out duration
             }}
           />
-          
+
           <Portfolio
             isVisible={activeSection === 'portfolio' && showPortfolio}
             onBack={() => {
