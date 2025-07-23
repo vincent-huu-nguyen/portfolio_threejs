@@ -39,6 +39,10 @@ const Portfolio = ({ isVisible, onBack }) => {
     const playBack = useSoundEffect(backSoundFile);
     const playHover = useSoundEffect(hoverSoundFile);
 
+    const [showSwipeHint, setShowSwipeHint] = useState(false);
+    const scrollTimeoutRef = useRef(null);
+    const [pulseOpacity, setPulseOpacity] = useState(true);
+
 
     const portfolio = useMemo(() => [
         {
@@ -155,11 +159,66 @@ const Portfolio = ({ isVisible, onBack }) => {
             });
 
             setFocusedIndex(closestIndex);
+
+            // 🧠 Reset swipe hint timer on scroll
+            setShowSwipeHint(false);
+            clearTimeout(scrollTimeoutRef.current);
+            scrollTimeoutRef.current = setTimeout(() => {
+                setShowSwipeHint(true);
+            }, 2000);
+
+            return () => {
+                container.removeEventListener("scroll", handleScroll);
+                clearTimeout(scrollTimeoutRef.current);
+            };
+
         };
+
 
         container.addEventListener("scroll", handleScroll, { passive: true });
         return () => container.removeEventListener("scroll", handleScroll);
     }, []);
+
+    useEffect(() => {
+        if (isVisible && scrollRef.current) {
+            const container = scrollRef.current;
+
+            // Manually call the scroll handler once to update focusedIndex and showSwipeHint
+            const cards = container.querySelectorAll(".card");
+            const viewportCenter = window.innerWidth / 2;
+
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                const cardCenter = rect.left + rect.width / 2;
+                const distance = Math.abs(viewportCenter - cardCenter);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = index;
+                }
+            });
+
+            setFocusedIndex(closestIndex);
+            setShowSwipeHint(true); // Show hint on first load
+        }
+    }, [isVisible]);
+
+    useEffect(() => {
+        let pulseInterval;
+
+        if (showSwipeHint) {
+            pulseInterval = setInterval(() => {
+                setPulseOpacity((prev) => !prev);
+            }, 700); // every 1 second
+        } else {
+            setPulseOpacity(true); // reset to visible when hidden
+        }
+
+        return () => clearInterval(pulseInterval);
+    }, [showSwipeHint]);
+
 
     /*
     useEffect(() => {
@@ -199,9 +258,23 @@ const Portfolio = ({ isVisible, onBack }) => {
                 }`}
         >
             <section className="py-1 md:py-10 max-w-6xl mx-auto">
-                <h1 className="flex items-center justify-center flex-col text-center opacity-100 text-4xl md:text-5xl font-bold mb-10 bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 text-transparent bg-clip-text hover:scale-110 duration-200">
+                <h1 className="flex items-center justify-center flex-col text-center opacity-100 text-4xl md:text-5xl font-bold mb-1 bg-gradient-to-r from-green-500 via-indigo-500 to-purple-500 text-transparent bg-clip-text hover:scale-110 duration-200">
                     PORTFOLIO
                 </h1>
+
+                <div className="h-6 md:h-8 flex justify-center items-center transition-all duration-500 mb-3 overflow-hidden">
+                    <div
+                        className={`text-white text-sm md:text-base text-center flex items-center gap-2 
+    transition-opacity duration-500 ease-in-out 
+    ${showSwipeHint ? (pulseOpacity ? 'opacity-100' : 'opacity-50') : 'opacity-0'}
+  `}
+                    >
+                        <span className="text-lg">⬅️</span>
+                        <span className="bg-gradient-to-r from-indigo-500 via-indigo-500 to-indigo-500 text-transparent bg-clip-text">Swipe</span>
+                        <span className="text-lg">➡️</span>
+                    </div>
+                </div>
+
 
                 <div ref={scrollRef} className="custom-scrollbar overflow-x-auto scroll-smooth snap-x snap-mandatory">
                     <div className="flex w-max pb-6 px-4">
