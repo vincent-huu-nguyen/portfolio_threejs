@@ -59,6 +59,7 @@ function App() {
               setOptionsVisible={setOptionsVisible}
               showOptions={showOptions}
               setShowOptions={setShowOptions}
+              musicRef={musicRef}
             />
           )}
 
