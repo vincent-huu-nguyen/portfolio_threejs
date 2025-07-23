@@ -165,7 +165,7 @@ const Portfolio = ({ isVisible, onBack }) => {
             clearTimeout(scrollTimeoutRef.current);
             scrollTimeoutRef.current = setTimeout(() => {
                 setShowSwipeHint(true);
-            }, 1000); 
+            }, 1000);
 
             return () => {
                 container.removeEventListener("scroll", handleScroll);
@@ -204,6 +204,16 @@ const Portfolio = ({ isVisible, onBack }) => {
             setShowSwipeHint(true); // Show hint on first load
         }
     }, [isVisible]);
+
+    useEffect(() => {
+        if (isVisible && scrollRef.current) {
+            scrollRef.current.scrollTo({
+                left: 0,
+                behavior: "instant", // or "smooth" if you want animation
+            });
+        }
+    }, [isVisible]);
+
 
     useEffect(() => {
         let pulseInterval;
