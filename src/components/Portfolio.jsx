@@ -127,11 +127,17 @@ const Portfolio = ({ isVisible, onBack }) => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setCurrentImageIndices((prev) =>
-                prev.map((index, i) => (index + 1) % portfolio[i].slideshowImages.length)
+                prev.map((index, i) => {
+                    if (Math.abs(focusedIndex - i) <= 1) {
+                        return (index + 1) % portfolio[i].slideshowImages.length;
+                    }
+                    return index; // Keep it the same if not in view
+                })
             );
         }, 2000);
         return () => clearInterval(intervalId);
-    }, [portfolio]);
+    }, [portfolio, focusedIndex]);
+
 
     useEffect(() => {
         const container = scrollRef.current;
