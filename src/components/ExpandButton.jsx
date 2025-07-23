@@ -37,6 +37,24 @@ export default function ExpandButton({
     };
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentTitle = musicRef?.current?.getCurrentTrackTitle?.();
+      if (currentTitle && currentTitle !== trackTitle) {
+        setTrackTitle(currentTitle);
+      }
+    }, 1000); // Check every second
+
+    return () => clearInterval(interval);
+  }, [musicRef, trackTitle]);
+
+  useEffect(() => {
+    if (showOptions && musicRef?.current?.isPlaying) {
+      const playing = musicRef.current.isPlaying();
+      setIsPlaying(playing);
+    }
+  }, [showOptions, musicRef]);
+
 
   const handleStartClick = () => {
     playClick();
@@ -91,7 +109,7 @@ export default function ExpandButton({
         <button
           onMouseEnter={playHover}
           onClick={handleStartClick}
-          className={`${baseButtonStyle} ${startVisible && !hideStart ? 'opacity-100' : 'opacity-0'}`}
+          className={`${baseButtonStyle} mt-25 ${startVisible && !hideStart ? 'opacity-100' : 'opacity-0'}`}
         >
           Start
         </button>
@@ -103,7 +121,7 @@ export default function ExpandButton({
               } flex flex-col items-center gap-2 text-white mb-4`}
           >
             <span className="text-sm font-semibold">
-              Now Playing: "{musicRef?.current?.getCurrentTrackTitle?.() || '...'}"
+              Now Playing: "{musicRef?.current?.getCurrentTrackTitle?.() || '...'}" - Cents
             </span>
             <div className="flex gap-4">
               <button
@@ -140,20 +158,36 @@ export default function ExpandButton({
             className={`grid gap-4 transition-opacity duration-500 ${windowHeight < 500 ? 'grid-cols-2 auto-rows-auto' : 'flex flex-col items-center'
               } ${optionsVisible ? 'opacity-100' : 'opacity-0'}`}
           >
-            {['About Me', 'Portfolio', 'Contact Me', 'Extra'].map((label, index) => (
+            {['About Me', 'Portfolio', 'Contact Me', 'Coming Soon'].map((label, index) => (
               <button
                 key={index}
                 className={baseButtonStyle}
                 onMouseEnter={playHover}
                 onClick={() => {
                   playClick();
-                  setOptionsVisible(false);
-                  setTimeout(() => {
-                    setShowOptions(false);
-                    if (label === 'About Me') onAboutMeClick?.();
-                    else if (label === 'Contact Me') onContactClick?.();
-                    else if (label === 'Portfolio') onPortfolioClick?.();
-                  }, 500);
+
+                  // Only respond for the active buttons
+                  if (label === 'About Me') {
+                    setOptionsVisible(false);
+                    setTimeout(() => {
+                      setShowOptions(false);
+                      onAboutMeClick?.();
+                    }, 500);
+                  } else if (label === 'Portfolio') {
+                    setOptionsVisible(false);
+                    setTimeout(() => {
+                      setShowOptions(false);
+                      onPortfolioClick?.();
+                    }, 500);
+                  } else if (label === 'Contact Me') {
+                    setOptionsVisible(false);
+                    setTimeout(() => {
+                      setShowOptions(false);
+                      onContactClick?.();
+                    }, 500);
+                  }
+
+                  // 'Coming Soon' does nothing
                 }}
               >
                 {label}

@@ -38,21 +38,33 @@ const BackgroundMusic = forwardRef((props, ref) => {
 
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
+    const handleEnded = () => {
+      const nextIndex = (currentIndex + 1) % tracks.length;
+      setCurrentIndex(nextIndex);
+    };
 
     audio.addEventListener("play", handlePlay);
     audio.addEventListener("pause", handlePause);
+    audio.addEventListener("ended", handleEnded); // ✅ Add ended listener
 
     return () => {
       audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("pause", handlePause);
+      audio.removeEventListener("ended", handleEnded); // ✅ Remove it too
     };
-  }, []);
+  }, [currentIndex]);
 
   // Play track automatically when currentIndex changes
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.load();
-      audioRef.current.play();
+    const audio = audioRef.current;
+    if (audio) {
+      audio.load(); // Load new source
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.warn("Auto-play failed:", error);
+        });
+      }
     }
   }, [currentIndex]);
 
