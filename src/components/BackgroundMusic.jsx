@@ -1,11 +1,25 @@
 import { forwardRef, useImperativeHandle, useRef, useEffect, useState } from 'react';
 import Changes from '../assets/changes.wav';
 import Journey from '../assets/Journey.wav';
-//import Track3 from '../assets/track3.wav'; // Add as needed
+import BackToGold from '../assets/BackToGold.wav'; 
+import Cold from '../assets/Cold.wav';
+import Distorted from '../assets/Distorted.wav';
+import DizzyCity from '../assets/dizzycity.wav';
+import Drive from '../assets/Drive.wav';
+import Livin from '../assets/livin.wav';
+import Starburst from '../assets/Starburst.wav';
+
 
 const tracks = [
   { title: "Changes", src: Changes },
+  { title: "Drive", src: Drive },
+  { title: "Starburst", src: Starburst },
+  { title: "Dizzy City", src: DizzyCity },
   { title: "Journey", src: Journey },
+  { title: "Distorted", src: Distorted },
+  { title: "Back To Gold", src: BackToGold },
+  { title: "Cold", src: Cold },
+  { title: "Livin'", src: Livin },
 ];
 
 const BackgroundMusic = forwardRef((props, ref) => {
