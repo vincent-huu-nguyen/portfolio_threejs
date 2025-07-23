@@ -121,8 +121,11 @@ const Portfolio = ({ isVisible, onBack }) => {
     };
 
     useEffect(() => {
-        setCurrentImageIndices(Array(portfolio.length).fill(0));
-    }, [portfolio]);
+        setCurrentImageIndices(
+            portfolio.map(() => 0)
+        );
+    }, []);
+
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -225,11 +228,16 @@ const Portfolio = ({ isVisible, onBack }) => {
 
                             >
                                 <div className="bg-[#030303] p-2 rounded-md shadow-md h-[425px] flex flex-col justify-between">
-                                    <img
-                                        src={item.slideshowImages[currentImageIndices[index] || 0]}
-                                        alt={item.title}
-                                        className="object-contain rounded-lg h-64 w-full"
-                                    />
+                                    {Math.abs(focusedIndex - index) <= 1 ? (
+                                        <img
+                                            loading="lazy"
+                                            src={item.slideshowImages[currentImageIndices[index] || 0]}
+                                            alt={item.title}
+                                            className="object-contain rounded-lg h-64 w-full"
+                                        />
+                                    ) : (
+                                        <div className="h-64 w-full bg-gray-900 rounded-lg" /> // placeholder
+                                    )}
                                     <p className="text-md text-[#f7f8f8] font-semibold">{item.title}</p>
                                     <div className="flex flex-wrap gap-1 mt-1 mb-2">
                                         {item.tech.map((tech, i) => (
