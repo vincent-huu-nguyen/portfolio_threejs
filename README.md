@@ -34,4 +34,13 @@ This is my personal **portfolio website** built with modern front-end technologi
 ![3D Portfolio Preview](./src/assets/portfolioThreeJS3.gif)
 
 
+## 🧠 Inspiration
+
+This portfolio blends creativity and interactivity, showcasing both technical and artistic skills. Inspired by video games, digital art, and modern UI/UX trends.
+
+## 📝 License
+
+This project is open-source and free to use. If you find it helpful or inspiring, feel free to star the repo ⭐ or fork it!
+
+---
 
