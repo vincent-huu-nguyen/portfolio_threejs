@@ -2,6 +2,8 @@
 
 This is my personal **portfolio website** built with modern front-end technologies including **React**, **Three.js**, and **TailwindCSS**. The site showcases my work in **web development**, **game design**, and **sound design**, wrapped in an interactive and animated 3D experience.
 
+![Portfolio Preview](./src/assets/portfolioThreeJS.gif)
+
 ## 🌟 Features
 
 - 🎮 3D interactive homepage built with **Three.js** and **React Three Fiber**
