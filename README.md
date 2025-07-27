@@ -29,4 +29,9 @@ This is my personal **portfolio website** built with modern front-end technologi
 
 ## 📸 Screenshots
 
+![3D Portfolio Preview](./src/assets/portfolioThreeJS1.gif)
+![3D Portfolio Preview](./src/assets/portfolioThreeJS2.gif)
+![3D Portfolio Preview](./src/assets/portfolioThreeJS3.gif)
+
+
 
