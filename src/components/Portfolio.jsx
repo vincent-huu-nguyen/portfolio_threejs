@@ -25,6 +25,7 @@ import PortfolioThreeJS from "../assets/portfolioThreeJS.gif"
 import PortfolioThreeJS1 from "../assets/portfolioThreeJS1.gif"
 import PortfolioThreeJS2 from "../assets/portfolioThreeJS2.gif"
 import PortfolioThreeJS3 from "../assets/portfolioThreeJS3.gif"
+import bookingsystem from "../assets/bookingsystem.png"
 
 import useSoundEffect from '../hooks/useSoundEffect';
 import backSoundFile from '../assets/back.mp3';
@@ -53,6 +54,15 @@ const Portfolio = ({ isVisible, onBack }) => {
             live: "https://vincentnguyen.vercel.app/",
             git: "https://github.com/vincent-huu-nguyen/portfolio_threejs",
             slideshowImages: [PortfolioThreeJS1, PortfolioThreeJS2, PortfolioThreeJS3, PortfolioThreeJS],
+        },
+        {
+            img: bookingsystem,
+            title: "Booking System",
+            tech: ["React", "TypeScript", "TailwindCSS", "Firebase"],
+            desc: "A simple and user-friendly web app to help individuals track and manage their personal appointments. Built with React, Firebase, and TailwindCSS.",
+            live: "https://booking-system-gamma-ivory.vercel.app/",
+            git: "https://github.com/vincent-huu-nguyen/booking-system",
+            slideshowImages: [bookingsystem],
         },
         {
             img: musicChanges,
