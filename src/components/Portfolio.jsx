@@ -26,6 +26,7 @@ import PortfolioThreeJS1 from "../assets/portfolioThreeJS1.gif"
 import PortfolioThreeJS2 from "../assets/portfolioThreeJS2.gif"
 import PortfolioThreeJS3 from "../assets/portfolioThreeJS3.gif"
 import bookingsystem from "../assets/bookingsystem.png"
+import AppointApp from "../assets/AppointApp.png"
 
 import useSoundEffect from '../hooks/useSoundEffect';
 import backSoundFile from '../assets/back.mp3';
@@ -56,13 +57,13 @@ const Portfolio = ({ isVisible, onBack }) => {
             slideshowImages: [PortfolioThreeJS1, PortfolioThreeJS2, PortfolioThreeJS3, PortfolioThreeJS],
         },
         {
-            img: bookingsystem,
-            title: "Booking System",
+            img: AppointApp,
+            title: "Appoint.",
             tech: ["React", "TypeScript", "TailwindCSS", "Firebase"],
-            desc: "A simple and user-friendly web app to help individuals track and manage their personal appointments. Built with React, Firebase, and TailwindCSS.",
-            live: "https://booking-system-gamma-ivory.vercel.app/",
-            git: "https://github.com/vincent-huu-nguyen/booking-system",
-            slideshowImages: [bookingsystem],
+            desc: "A full-featured business booking web app that allows customers to browse businesses, book appointments, and manage their bookings, while business owners can manage services, profiles, and appointments in real time.",
+            live: "https://github.com/vincent-huu-nguyen/appoint-app",
+            git: "https://github.com/vincent-huu-nguyen/appoint-app",
+            slideshowImages: [AppointApp],
         },
         {
             img: musicChanges,
@@ -90,6 +91,15 @@ const Portfolio = ({ isVisible, onBack }) => {
             live: "https://salslinger.itch.io/snatched",
             git: "https://github.com/Salslinger/CSE-4304-Team-Project",
             slideshowImages: [snatched, snatched1, snatched2, snatched3, snatched4, snatched5],
+        },
+        {
+            img: bookingsystem,
+            title: "Booking System",
+            tech: ["React", "TypeScript", "TailwindCSS", "Firebase"],
+            desc: "A simple and user-friendly web app to help individuals track and manage their personal appointments. Built with React, Firebase, and TailwindCSS.",
+            live: "https://booking-system-gamma-ivory.vercel.app/",
+            git: "https://github.com/vincent-huu-nguyen/booking-system",
+            slideshowImages: [bookingsystem],
         },
         {
             img: PortfolioWebsite,
