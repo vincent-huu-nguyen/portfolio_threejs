@@ -61,7 +61,7 @@ const Portfolio = ({ isVisible, onBack }) => {
             title: "Appoint.",
             tech: ["React", "TypeScript", "TailwindCSS", "Firebase"],
             desc: "A full-featured business booking web app that allows customers to browse businesses, book appointments, and manage their bookings, while business owners can manage services, profiles, and appointments in real time.",
-            live: "https://github.com/vincent-huu-nguyen/appoint-app",
+            live: "https://appoint-app-self.vercel.app/",
             git: "https://github.com/vincent-huu-nguyen/appoint-app",
             slideshowImages: [AppointApp],
         },
