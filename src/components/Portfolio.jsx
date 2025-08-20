@@ -28,7 +28,6 @@ import PortfolioThreeJS3 from "../assets/portfolioThreeJS3.gif"
 import bookingsystem from "../assets/bookingsystem.png"
 import Appoint from "../assets/Appoint.png"
 import AppointHome from "../assets/Appoint-home.png"
-import AppointReg from "../assets/Appoint-reg.png"
 import AppointBook from "../assets/Appoint-book.png"
 
 import useSoundEffect from '../hooks/useSoundEffect';
@@ -66,7 +65,7 @@ const Portfolio = ({ isVisible, onBack }) => {
             desc: "A full-featured business booking web app that allows customers to browse businesses, book appointments, and manage their bookings, while business owners can manage services, profiles, and appointments in real time.",
             live: "https://appoint-app-self.vercel.app/",
             git: "https://github.com/vincent-huu-nguyen/appoint-app",
-            slideshowImages: [Appoint, AppointHome, AppointReg, AppointBook],
+            slideshowImages: [Appoint, AppointHome, AppointBook],
         },
         {
             img: musicChanges,
